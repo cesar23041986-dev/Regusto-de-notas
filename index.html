@@ -6,56 +6,49 @@
   <title>Sistema de Registro de Notas — Instituto Nacional Gaspar García Laviana</title>
   <style>
     :root {
-      --navy-950: #06102e;
-      --navy-900: #0c1d5e;
-      --navy-800: #152e8a;
-      --green-700: #0b6623;
-      --green-600: #12802e;
-      --bg-app: #f1f5f9;
-      --bg-card: #ffffff;
-      --bg-subtle: #f8fafc;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --border-light: #e2e8f0;
-      --border-strong: #cbd5e1;
-      --primary: #0c1d5e;
-      --primary-hover: #172f8c;
+      --primary: #14532d;
+      --primary-dark: #0f3d21;
+      --primary-light: #166534;
+      --accent: #b45309;
+      --accent-soft: #fef3c7;
+      --bg: #f3f6f4;
+      --surface: #ffffff;
+      --surface-alt: #f8faf9;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #d1d5db;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --warn: #b45309;
+      --warn-bg: #fef3c7;
       --danger: #b91c1c;
-      --success: #0b6623;
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 14px;
-      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
-      --shadow-md: 0 6px 18px rgba(12, 29, 94, 0.08);
+      --danger-bg: #fee2e2;
+      --radius: 10px;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg-app);
-      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.45;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .app-shell {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     .topbar {
-      background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 65%, var(--green-700) 140%);
-      color: #ffffff;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
       padding: 12px 16px;
-      box-shadow: var(--shadow-md);
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     }
 
     .topbar-inner {
@@ -68,244 +61,89 @@
       gap: 12px;
     }
 
-    .brand-group {
+    .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-title {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      color: #ffffff;
-    }
-
-    .brand-sub {
-      margin: 2px 0 0;
-      font-size: 12px;
-      color: #dbeafe;
-    }
-
-    .logo-img {
-      object-fit: contain;
-      border-radius: 8px;
-      background: #ffffff;
-      padding: 2px;
-      flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
-    }
-
-    .logo-fallback-badge {
-      border-radius: 8px;
-      background: #ffffff;
-      color: var(--navy-900);
-      font-weight: 900;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
-    }
-
-    .topbar-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .user-pill {
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #ffffff;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .sync-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      display: inline-block;
-      background: #4ade80;
-    }
-
-    .sync-dot.syncing { background: #facc15; }
-    .sync-dot.offline { background: #94a3b8; }
-    .sync-dot.error { background: #f87171; }
-
-    .main-container {
-      width: 100%;
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 16px;
-      flex: 1;
-    }
-
-    .tabs-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-      background: var(--bg-card);
-      padding: 8px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .tab-btn {
-      appearance: none;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text-muted);
-      font-weight: 700;
-      font-size: 13px;
-      padding: 9px 14px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .tab-btn:hover {
-      background: var(--bg-subtle);
-      color: var(--navy-900);
-    }
-
-    .tab-btn.active {
-      background: var(--navy-900);
-      color: #ffffff;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 16px;
-    }
-
-    .card-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .card-title {
-      margin: 0;
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--navy-900);
-    }
-
-    .card-subtitle {
-      margin: 4px 0 0;
-      font-size: 12.5px;
-      color: var(--text-muted);
     }
 
     .logo-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.3);
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 12px;
-      border-radius: var(--radius-md);
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    @media (max-width: 960px) {
-      .grid-3, .grid-4 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .grid-2, .grid-3, .grid-4 {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .main-container {
-        padding: 10px;
-      }
-      .card {
-        padding: 14px;
-      }
-      .btn-sm {
-        padding: 7px 11px;
-        font-size: 12px;
-      }
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .form-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--navy-900);
-    }
-
-    .form-control, .select-sm, .input-sm {
+    .logo-box img {
       width: 100%;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 8px 10px;
-      font-size: 13px;
-      color: var(--text-main);
-      background: #ffffff;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .form-control:focus, .select-sm:focus, .input-sm:focus {
-      outline: none;
-      border-color: var(--navy-800);
-      box-shadow: 0 0 0 3px rgba(12, 29, 94, 0.12);
+    .logo-fallback {
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      opacity: 0.88;
+    }
+
+    .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .badge.online {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .badge.syncing {
+      background: #d97706;
+      color: #fff;
+    }
+
+    .badge.offline-warn {
+      background: #dc2626;
+      color: #fff;
     }
 
     .btn {
-      appearance: none;
       border: 1px solid transparent;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
+      border-radius: 8px;
+      padding: 8px 13px;
       font-size: 13px;
-      padding: 8px 14px;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -315,71 +153,250 @@
       text-decoration: none;
     }
 
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background: #92400e;
+    }
+
+    .btn-light {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-light:hover:not(:disabled) {
+      background: #f9fafb;
+    }
+
+    .btn-ghost-light {
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    .btn-ghost-light:hover:not(:disabled) {
+      background: rgba(255,255,255,0.24);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
     .btn-sm {
       padding: 6px 10px;
       font-size: 12px;
     }
 
-    .btn-primary {
-      background: var(--navy-900);
-      color: #ffffff;
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 18px 16px 56px;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-hover);
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
     }
 
-    .btn-success {
-      background: var(--green-700);
-      color: #ffffff;
+    .card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    .btn-success:hover {
-      background: var(--green-600);
-    }
-
-    .btn-secondary {
-      background: #ffffff;
-      color: var(--navy-900);
-      border-color: var(--border-strong);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-subtle);
-    }
-
-    .btn-danger {
-      background: var(--danger);
-      color: #ffffff;
-    }
-
-    .btn-danger:hover {
-      background: #991b1b;
-    }
-
-    .kpi-card {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-    }
-
-    .kpi-label {
-      font-size: 11.5px;
+    .card-title {
+      font-size: 16px;
       font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
+      color: var(--primary-dark);
     }
 
-    .kpi-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--navy-900);
-      margin-top: 4px;
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--muted);
     }
 
-    .badge {
+    .login-wrap {
+      max-width: 540px;
+      margin: 24px auto;
+    }
+
+    .logo-upload-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface-alt);
+      border: 1px dashed #9ca3af;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+    }
+
+    .logo-preview-lg {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-preview-lg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(20, 83, 45, 0.25);
+      border-color: var(--primary);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 8px 9px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f0fdf4;
+      color: var(--primary-dark);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    .grade-input {
+      width: 66px;
+      padding: 6px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .qual-select {
+      min-width: 72px;
+      padding: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill {
       display: inline-block;
       padding: 2px 8px;
       border-radius: 999px;
@@ -387,2113 +404,1853 @@
       font-weight: 700;
     }
 
-    .badge-navy {
-      background: #e0e7ff;
-      color: var(--navy-900);
+    .pill-cuan {
+      background: #dbeafe;
+      color: #1e40af;
     }
 
-    .badge-green {
-      background: #dcfce7;
-      color: var(--green-700);
-    }
-
-    .badge-amber {
+    .pill-qual {
       background: #fef3c7;
       color: #92400e;
     }
 
-    .badge-red {
-      background: #fee2e2;
-      color: #991b1b;
+    .pill-shift-m {
+      background: #dcfce7;
+      color: #166534;
     }
 
-    .table-wrap {
-      width: 100%;
-      overflow-x: auto;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      background: #ffffff;
+    .pill-shift-v {
+      background: #ffedd5;
+      color: #9a3412;
     }
 
-    table.data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      white-space: nowrap;
+    .pill-ok {
+      background: var(--success-bg);
+      color: var(--success);
     }
 
-    table.data-table th,
-    table.data-table td {
-      border: 1px solid var(--border-light);
-      padding: 6px 8px;
-      text-align: center;
-      vertical-align: middle;
+    .pill-fail {
+      background: var(--danger-bg);
+      color: var(--danger);
     }
 
-    table.data-table th {
-      background: var(--navy-900);
-      color: #ffffff;
-      font-weight: 700;
-      position: sticky;
-      top: 0;
-      z-index: 5;
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    table.data-table th.sub-th {
-      background: #1e3a8a;
-      font-size: 11px;
-    }
-
-    table.data-table th.qual-th {
-      background: var(--green-700);
-    }
-
-    table.data-table td.left,
-    table.data-table th.left {
-      text-align: left;
-    }
-
-    table.data-table tbody tr:nth-child(even) {
-      background: #f8fafc;
-    }
-
-    table.data-table tbody tr:hover {
-      background: #eff6ff;
-    }
-
-    .grade-num-input {
-      width: 58px;
-      padding: 4px 5px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 12px;
-      border: 1px solid var(--border-strong);
-      border-radius: 4px;
-    }
-
-    .grade-num-input:focus {
-      outline: 2px solid var(--navy-800);
-      border-color: var(--navy-800);
-    }
-
-    .grade-qual-select {
-      padding: 4px 5px;
-      font-weight: 700;
-      font-size: 11.5px;
-      border: 1px solid var(--border-strong);
-      border-radius: 4px;
-      background: #ffffff;
-    }
-
-    .locked-cell {
-      background: #f1f5f9 !important;
-      color: #64748b;
-    }
-
-    .login-wrapper {
-      max-width: 780px;
-      margin: 12px auto;
-    }
-
-    .demo-panel {
-      margin-top: 14px;
+    .kpi {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       padding: 12px;
-      border-radius: var(--radius-md);
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
     }
 
-    .demo-item {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 8px 0;
-      border-bottom: 1px dashed var(--border-strong);
-      font-size: 12.5px;
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
     }
 
-    .demo-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
+    .kpi-val {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-top: 2px;
     }
 
-    .toast-container {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-width: calc(100vw - 32px);
-    }
-
-    .toast {
+    .alert {
       padding: 10px 14px;
-      border-radius: var(--radius-md);
-      color: #ffffff;
+      border-radius: 8px;
       font-size: 13px;
-      font-weight: 600;
-      box-shadow: var(--shadow-md);
-      animation: fadeIn 0.2s ease;
-    }
-
-    .toast-success { background: var(--green-700); }
-    .toast-error { background: var(--danger); }
-    .toast-info { background: var(--navy-900); }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .muted-note {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .alert-box {
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      font-size: 12.5px;
       margin-bottom: 12px;
+    }
+
+    .alert-info {
       background: #eff6ff;
-      border: 1px solid #bfdbfe;
       color: #1e3a8a;
+      border: 1px solid #bfdbfe;
+    }
+
+    .alert-warn {
+      background: var(--warn-bg);
+      color: #78350f;
+      border: 1px solid #fde68a;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .log-list {
+      max-height: 220px;
+      overflow-y: auto;
+      font-size: 12px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .log-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .log-item:last-child {
+      border-bottom: none;
+    }
+
+    .subject-selector-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-alt);
+      padding: 12px;
+      margin-top: 6px;
+    }
+
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .subject-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .subject-check input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .subject-tag {
+      display: inline-block;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: var(--primary-dark);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      margin: 2px 3px 2px 0;
+    }
+
+    .section-divider-row td {
+      background: #f0fdf4 !important;
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card {
+        padding: 14px;
+      }
+      .btn {
+        width: 100%;
+      }
+      .status-bar .btn, .card-header .btn, .tabs .tab-btn {
+        width: auto;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="app" class="app-shell"></div>
-  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo-box" id="topLogoBox">
+          <span class="logo-fallback" id="topLogoFallback">INGGL</span>
+        </div>
+        <div>
+          <div class="brand-title" id="topSchoolName">Instituto Nacional Gaspar García Laviana</div>
+          <div class="brand-sub">Tola, Rivas, Nicaragua · Sistema Integral de Registro de Notas (MINED)</div>
+        </div>
+      </div>
 
-  <script>
-    /* ========================================================================
-       CONFIGURACIÓN INSTITUCIONAL Y MALLA CURRICULAR (MINED NICARAGUA)
-       ======================================================================== */
-    const STORAGE_KEY = 'INGGL_SISTEMA_NOTAS_2026_V1';
+      <div class="status-bar">
+        <span id="onlineBadge" class="badge offline-warn">● Sin conexión</span>
+        <span id="syncBadge" class="badge">Sin URL en línea</span>
+        <span id="lastSaveBadge" class="badge">Listo</span>
+        <button id="btnSyncNow" class="btn btn-ghost-light btn-sm hidden" onclick="manualSync()">Sincronizar ahora</button>
+        <button id="btnLogout" class="btn btn-ghost-light btn-sm hidden" onclick="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
 
-    const GRADOS = ['7mo', '8vo', '9no', '10mo', '11mo'];
-    const SECCIONES = ['A', 'B', 'C'];
-    const TURNOS = ['Matutino', 'Vespertino'];
-
-    const PERIODOS = [
-      { id: 'corte1', label: 'I Corte Evaluativo', short: 'I Corte' },
-      { id: 'corte2', label: 'II Corte Evaluativo', short: 'II Corte' },
-      { id: 'semestral1', label: 'I Semestre (Prom.)', short: 'I Sem.' },
-      { id: 'corte3', label: 'III Corte Evaluativo', short: 'III Corte' },
-      { id: 'corte4', label: 'IV Corte Evaluativo', short: 'IV Corte' },
-      { id: 'semestral2', label: 'II Semestre (Prom.)', short: 'II Sem.' },
-      { id: 'anual', label: 'Promedio Anual', short: 'Anual' }
-    ];
-
-    const CUAN_7_9 = [
-      { id: 'lengua', name: 'Lengua y Literatura', short: 'Lengua' },
-      { id: 'ing', name: 'Lengua Extranjera (Inglés)', short: 'Inglés' },
-      { id: 'mat', name: 'Matemática', short: 'Matemática' },
-      { id: 'ccnn', name: 'Ciencias Naturales', short: 'CC.NN.' },
-      { id: 'est_soc', name: 'Estudios Sociales', short: 'Est. Soc.' },
-      { id: 'tac', name: 'Taller de Arte y Cultura (TAC)', short: 'TAC' }
-    ];
-
-    const CUAN_10_11 = [
-      { id: 'lengua', name: 'Lengua y Literatura', short: 'Lengua' },
-      { id: 'ing', name: 'Lengua Extranjera (Inglés)', short: 'Inglés' },
-      { id: 'mat', name: 'Matemática', short: 'Matemática' },
-      { id: 'fis', name: 'Física', short: 'Física' },
-      { id: 'quim', name: 'Química', short: 'Química' },
-      { id: 'bio', name: 'Biología', short: 'Biología' },
-      { id: 'hist_geo', name: 'Historia y Geografía', short: 'Hist. y Geo.' },
-      { id: 'filo', name: 'Filosofía', short: 'Filosofía' },
-      { id: 'soci', name: 'Sociología', short: 'Sociología' },
-      { id: 'econ', name: 'Economía', short: 'Economía' }
-    ];
-
-    const CUAL_SUBJECTS = [
-      { id: 'crec', name: 'Crecimiento en Valores', short: 'Crec. Valores' },
-      { id: 'ed_fis', name: 'Educación Física y Práctica Deportiva', short: 'Ed. Física' }
-    ];
-
-    const QUAL_OPTIONS = ['', 'AA', 'AS', 'AF', 'AI'];
-
-    function getCurriculumForGrade(grade) {
-      const isUpper = grade === '10mo' || grade === '11mo';
-      const cuan = isUpper ? CUAN_10_11 : CUAN_7_9;
-      return {
-        cuan,
-        cual: CUAL_SUBJECTS,
-        all: [...cuan, ...CUAL_SUBJECTS]
-      };
-    }
-
-    /* ========================================================================
-       BASE DE DATOS INICIAL EN BLANCO (SIN ESTUDIANTES NI NOTAS PRECARGADAS)
-       ======================================================================== */
-    function buildInitialDatabase() {
-      const sectionTurnos = {};
-      GRADOS.forEach((g, idx) => {
-        SECCIONES.forEach((sec, sIdx) => {
-          sectionTurnos[`${g} ${sec}`] = (idx + sIdx) % 2 === 0 ? 'Matutino' : 'Vespertino';
-        });
-      });
-
-      const users = [
-        {
-          id: 'u-dir',
-          name: 'Dirección General',
-          username: 'direccion',
-          password: '123',
-          role: 'admin',
-          turno: 'Todos',
-          guideSection: null,
-          assignedSubjects: ['*']
-        }
-      ];
-
-      return {
-        schoolName: 'INSTITUTO NACIONAL "GASPAR GARCÍA LAVIANA"',
-        schoolLocation: 'Tola, Rivas, Nicaragua — MINED',
-        motto: 'SANDINO! Siempre Más Allá!',
-        year: '2026',
-        onlineConfig: {
-          enabled: true,
-          mode: 'rest',
-          endpointUrl: '',
-          apiKey: '',
-          authToken: '',
-          documentPath: 'inggl/2026/database',
-          autoPullSeconds: 15
-        },
-        pendingSyncQueue: [],
-        sectionTurnos,
-        users,
-        students: [],
-        grades: {},
-        customLogo: null,
-        auditLog: [
-          {
-            id: 'log-init',
-            time: new Date().toLocaleTimeString('es-NI', { hour: '2-digit', minute: '2-digit' }),
-            actor: 'Sistema',
-            action: 'Base de datos en blanco inicializada (Matutino y Vespertino)'
-          }
-        ]
-      };
-    }
-
-    function loadDatabase() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) {
-          const fresh = buildInitialDatabase();
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh));
-          return fresh;
-        }
-        const parsed = JSON.parse(raw);
-        if (!parsed || typeof parsed !== 'object') {
-          return buildInitialDatabase();
-        }
-        const defaults = buildInitialDatabase();
-        if (!parsed.sectionTurnos) parsed.sectionTurnos = defaults.sectionTurnos;
-        if (!Array.isArray(parsed.users) || parsed.users.length === 0) parsed.users = defaults.users;
-        if (!Array.isArray(parsed.students)) parsed.students = [];
-        if (!parsed.grades || typeof parsed.grades !== 'object') parsed.grades = {};
-        if (!Array.isArray(parsed.auditLog)) parsed.auditLog = [];
-        if (!Array.isArray(parsed.pendingSyncQueue)) parsed.pendingSyncQueue = [];
-        parsed.onlineConfig = {
-          ...defaults.onlineConfig,
-          ...(parsed.onlineConfig && typeof parsed.onlineConfig === 'object' ? parsed.onlineConfig : {})
-        };
-        if (typeof parsed.customLogo !== 'string' || !parsed.customLogo.startsWith('data:image/')) {
-          parsed.customLogo = null;
-        }
-        return parsed;
-      } catch (err) {
-        return buildInitialDatabase();
-      }
-    }
-
-    let db = loadDatabase();
-
-    const state = {
-      currentUser: null,
-      activeTab: 'registro',
-      selectedSection: '7mo A',
-      selectedPeriod: 'corte1',
-      selectedTurnoFilter: 'Todos',
-      selectedRendTurno: 'Matutino',
-      selectedRendPeriod: 'corte1',
-      studentSearch: '',
-      loginError: '',
-      syncStatus: navigator.onLine ? 'online' : 'offline',
-      syncDetail: navigator.onLine ? 'ONLINE · Listo' : 'Sin señal · Cola activa',
-      isSyncing: false,
-      lastSyncedAt: '',
-      lastSavedAt: new Date().toLocaleTimeString('es-NI', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      })
-    };
-
-    /* ========================================================================
-       UTILIDADES, ESCUDO / LOGO Y NOTIFICACIONES
-       ======================================================================== */
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function notify(message, type = 'info') {
-      const container = document.getElementById('toastContainer');
-      if (!container) return;
-      const el = document.createElement('div');
-      el.className = `toast toast-${type}`;
-      el.textContent = message;
-      container.appendChild(el);
-      setTimeout(() => {
-        el.remove();
-      }, 3200);
-    }
-
-    function renderSchoolLogo(size = 46) {
-      if (db.customLogo && typeof db.customLogo === 'string' && db.customLogo.startsWith('data:image/')) {
-        return `<img src="${db.customLogo}" alt="Logo Institucional" class="logo-img" style="width:${size}px;height:${size}px;" />`;
-      }
-      const fontSize = Math.max(10, Math.round(size * 0.25));
-      return `<span class="logo-fallback-badge" style="width:${size}px;height:${size}px;font-size:${fontSize}px;">INGGL</span>`;
-    }
-
-    function handleLogoFileUpload(inputEl) {
-      const file = inputEl && inputEl.files && inputEl.files[0];
-      if (!file) return;
-      if (!file.type.startsWith('image/')) {
-        notify('Seleccione un archivo de imagen válido (PNG, JPG, WEBP).', 'error');
-        inputEl.value = '';
-        return;
-      }
-      if (file.size > 2 * 1024 * 1024) {
-        notify('La imagen supera los 2 MB. Elija una imagen más ligera.', 'error');
-        inputEl.value = '';
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = function (ev) {
-        const dataUrl = ev.target && ev.target.result;
-        if (typeof dataUrl === 'string' && dataUrl.startsWith('data:image/')) {
-          db.customLogo = dataUrl;
-          saveDatabase('Logo institucional actualizado', true);
-          render();
-        }
-      };
-      reader.onerror = function () {
-        notify('Error al leer la imagen del logo.', 'error');
-      };
-      reader.readAsDataURL(file);
-      inputEl.value = '';
-    }
-
-    function resetSchoolLogo() {
-      db.customLogo = null;
-      saveDatabase('Logo institucional restablecido al predeterminado', true);
-      render();
-    }
-
-    function renderLogoManagerCard() {
-      return `
-        <div class="card">
-          <div class="card-header">
-            <div>
-              <h3 class="card-title">Logo Institucional del Centro</h3>
-              <p class="card-subtitle">Sube o cambia el logo oficial que aparece en el encabezado, inicio de sesión y reportes exportados a Excel.</p>
-            </div>
-            <span class="badge ${db.customLogo ? 'badge-green' : 'badge-navy'}">
-              ${db.customLogo ? 'Logo Personalizado Activo' : 'Logo Predeterminado'}
-            </span>
+  <main class="container">
+    <!-- PANTALLA DE INICIO DE SESIÓN -->
+    <section id="loginSection" class="login-wrap">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Acceso al Sistema de Notas</div>
+            <div class="card-subtitle">Instituto Nacional Gaspar García Laviana · Turno Matutino y Vespertino</div>
           </div>
-          <div class="logo-box">
-            ${renderSchoolLogo(64)}
-            <div style="flex:1;min-width:200px;">
-              <div style="font-weight:700;font-size:13px;color:var(--navy-900);">${escapeHtml(db.schoolName)}</div>
-              <div class="muted-note">${escapeHtml(db.schoolLocation)}</div>
+        </div>
+
+        <div class="logo-upload-bar">
+          <div class="logo-preview-lg" id="loginLogoPreview">
+            <span class="logo-fallback" style="color:#14532d;">INGGL</span>
+          </div>
+          <div style="flex:1; min-width:190px;">
+            <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Logo Institucional</div>
+            <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">
+              Sube o cambia el logo oficial para mostrarlo en el sistema y en las exportaciones a Excel.
             </div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <label class="btn btn-primary btn-sm" style="margin:0;cursor:pointer;">
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <label class="btn btn-light btn-sm" style="cursor:pointer; margin:0;">
                 Subir / Cambiar Logo
-                <input type="file" accept="image/*" style="display:none;" onchange="handleLogoFileUpload(this)" />
+                <input type="file" id="logoInputLogin" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)" />
               </label>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="resetSchoolLogo()">Quitar Logo</button>
+              <button type="button" class="btn btn-light btn-sm" onclick="clearLogo()">Quitar Logo</button>
             </div>
           </div>
         </div>
-      `;
-    }
 
-    function recordAudit(action) {
-      const actor = state.currentUser ? `${state.currentUser.name} (${state.currentUser.username})` : 'Sistema';
-      db.auditLog.unshift({
-        id: `log-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        time: new Date().toLocaleTimeString('es-NI', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        actor,
-        action
-      });
-      if (db.auditLog.length > 150) {
-        db.auditLog = db.auditLog.slice(0, 150);
-      }
-    }
+        <div id="loginError" class="alert alert-warn hidden"></div>
 
-    function saveDatabase(auditMessage = null, showToast = false, options = {}) {
-      const skipOnlinePush = Boolean(options && options.skipOnlinePush);
-      try {
-        if (auditMessage) {
-          recordAudit(auditMessage);
-        }
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-        state.lastSavedAt = new Date().toLocaleTimeString('es-NI', {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        });
-        updateSyncStatusUI();
-        if (showToast) {
-          notify('Cambios guardados en la base de datos.', 'success');
-        }
-        if (!skipOnlinePush && db.onlineConfig && db.onlineConfig.enabled) {
-          queueAndSyncOnline(auditMessage || 'Actualización de registro');
-        }
-      } catch (err) {
-        notify('No se pudo guardar en el almacenamiento local.', 'error');
-      }
-    }
-
-    /* ========================================================================
-       SINCRONIZACIÓN ONLINE EN TIEMPO REAL (REST / FIREBASE RTDB / FIRESTORE)
-       ======================================================================== */
-    function buildCloudPayload() {
-      return {
-        updatedAt: new Date().toISOString(),
-        actor: state.currentUser ? state.currentUser.username : 'system',
-        year: db.year,
-        schoolName: db.schoolName,
-        sectionTurnos: db.sectionTurnos,
-        users: db.users,
-        students: db.students,
-        grades: db.grades,
-        customLogo: db.customLogo
-      };
-    }
-
-    function applyCloudPayload(remoteData) {
-      if (!remoteData || typeof remoteData !== 'object') return false;
-      const candidate = remoteData.fields && remoteData.fields.payloadJson
-        ? JSON.parse(remoteData.fields.payloadJson.stringValue)
-        : (remoteData.data && typeof remoteData.data === 'object' ? remoteData.data : remoteData);
-
-      if (!candidate || !Array.isArray(candidate.students) || !Array.isArray(candidate.users)) {
-        return false;
-      }
-
-      db.sectionTurnos = candidate.sectionTurnos || db.sectionTurnos;
-      db.users = candidate.users;
-      db.students = candidate.students;
-      db.grades = candidate.grades && typeof candidate.grades === 'object' ? candidate.grades : {};
-      if (typeof candidate.customLogo === 'string' && candidate.customLogo.startsWith('data:image/')) {
-        db.customLogo = candidate.customLogo;
-      }
-      if (state.currentUser) {
-        const refreshed = db.users.find((u) => u.id === state.currentUser.id);
-        if (refreshed) state.currentUser = refreshed;
-        ensureValidSelectedSection();
-      }
-      return true;
-    }
-
-    function resolveTargetUrl() {
-      const cfg = db.onlineConfig || {};
-      const baseUrl = String(cfg.endpointUrl || '').trim();
-      const apiKey = String(cfg.apiKey || '').trim();
-      const authToken = String(cfg.authToken || '').trim();
-      const docPath = String(cfg.documentPath || 'inggl/2026/database').trim().replace(/^\/+|\/+$/g, '');
-
-      if (!baseUrl) return null;
-
-      if (cfg.mode === 'firebase_rtdb') {
-        const cleanBase = baseUrl.replace(/\/+$/, '');
-        const rtdbPath = docPath.endsWith('.json') ? docPath : `${docPath}.json`;
-        const joiner = rtdbPath.includes('?') ? '&' : '?';
-        const authQuery = authToken ? `${joiner}auth=${encodeURIComponent(authToken)}` : '';
-        return `${cleanBase}/${rtdbPath}${authQuery}`;
-      }
-
-      if (cfg.mode === 'firestore') {
-        const cleanBase = baseUrl.replace(/\/+$/, '');
-        const docUrl = `${cleanBase}/${docPath}`;
-        return apiKey ? `${docUrl}?key=${encodeURIComponent(apiKey)}` : docUrl;
-      }
-
-      return baseUrl;
-    }
-
-    function buildRequestHeaders() {
-      const cfg = db.onlineConfig || {};
-      const headers = { 'Content-Type': 'application/json' };
-      if (cfg.authToken && cfg.mode === 'rest') {
-        headers['Authorization'] = `Bearer ${cfg.authToken}`;
-      }
-      if (cfg.apiKey && cfg.mode === 'rest') {
-        headers['x-api-key'] = cfg.apiKey;
-      }
-      return headers;
-    }
-
-    function formatBodyForMode(payload) {
-      const cfg = db.onlineConfig || {};
-      if (cfg.mode === 'firestore') {
-        return JSON.stringify({
-          fields: {
-            updatedAt: { stringValue: payload.updatedAt },
-            actor: { stringValue: payload.actor },
-            payloadJson: { stringValue: JSON.stringify(payload) }
-          }
-        });
-      }
-      return JSON.stringify(payload);
-    }
-
-    async function pushSingleItemToCloud(item) {
-      const url = resolveTargetUrl();
-      if (!url) return { ok: false, reason: 'no_endpoint' };
-      if (!navigator.onLine) return { ok: false, reason: 'offline' };
-
-      const method = db.onlineConfig.mode === 'firestore' ? 'PATCH' : 'PUT';
-      const resp = await fetch(url, {
-        method,
-        headers: buildRequestHeaders(),
-        body: formatBodyForMode(item.payload)
-      });
-
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      return { ok: true };
-    }
-
-    async function queueAndSyncOnline(summaryText = 'Cambio en línea') {
-      const cfg = db.onlineConfig || {};
-      if (!cfg.enabled) {
-        state.syncStatus = 'offline';
-        state.syncDetail = 'Modo nube pausado';
-        updateSyncStatusUI();
-        return;
-      }
-
-      const entry = {
-        id: `sync-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        summary: summaryText,
-        createdAt: new Date().toISOString(),
-        payload: buildCloudPayload()
-      };
-
-      db.pendingSyncQueue = [entry];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-
-      if (!cfg.endpointUrl || !String(cfg.endpointUrl).trim()) {
-        state.syncStatus = navigator.onLine ? 'info' : 'offline';
-        state.syncDetail = navigator.onLine
-          ? 'En línea · Configure URL en Dirección'
-          : 'Sin conexión · En cola de reintento';
-        updateSyncStatusUI();
-        return;
-      }
-
-      await flushSyncQueue();
-    }
-
-    async function flushSyncQueue(showFeedback = false) {
-      const cfg = db.onlineConfig || {};
-      if (!cfg.enabled || !cfg.endpointUrl || !String(cfg.endpointUrl).trim()) {
-        updateSyncStatusUI();
-        return;
-      }
-
-      if (!navigator.onLine) {
-        state.syncStatus = 'offline';
-        state.syncDetail = `Sin señal (${db.pendingSyncQueue.length} en cola)`;
-        updateSyncStatusUI();
-        return;
-      }
-
-      if (state.isSyncing) return;
-      state.isSyncing = true;
-      state.syncStatus = 'syncing';
-      state.syncDetail = 'Sincronizando en línea...';
-      updateSyncStatusUI();
-
-      try {
-        while (Array.isArray(db.pendingSyncQueue) && db.pendingSyncQueue.length > 0) {
-          const currentItem = db.pendingSyncQueue[db.pendingSyncQueue.length - 1];
-          const res = await pushSingleItemToCloud(currentItem);
-          if (!res.ok) break;
-          db.pendingSyncQueue = [];
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-        }
-
-        state.lastSyncedAt = new Date().toLocaleTimeString('es-NI', {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        });
-        state.syncStatus = 'online';
-        state.syncDetail = `ONLINE · Sincronizado ${state.lastSyncedAt}`;
-        updateSyncStatusUI();
-
-        if (showFeedback) {
-          notify('Base de datos sincronizada en línea correctamente.', 'success');
-        }
-      } catch (err) {
-        state.syncStatus = 'error';
-        state.syncDetail = `Reintentando (${db.pendingSyncQueue.length} en cola)`;
-        updateSyncStatusUI();
-        if (showFeedback) {
-          notify('No se pudo conectar con el servidor en línea. Quedó en cola de reintento.', 'error');
-        }
-      } finally {
-        state.isSyncing = false;
-        updateSyncStatusUI();
-      }
-    }
-
-    async function pullLatestFromCloud(showFeedback = false) {
-      const cfg = db.onlineConfig || {};
-      const url = resolveTargetUrl();
-      if (!cfg.enabled || !url) {
-        if (showFeedback) notify('Configure primero la URL del endpoint en Dirección.', 'info');
-        return;
-      }
-      if (!navigator.onLine) {
-        if (showFeedback) notify('No hay conexión a internet para descargar cambios.', 'error');
-        return;
-      }
-      if (db.pendingSyncQueue && db.pendingSyncQueue.length > 0) {
-        await flushSyncQueue(false);
-      }
-
-      try {
-        state.syncStatus = 'syncing';
-        state.syncDetail = 'Consultando nube...';
-        updateSyncStatusUI();
-
-        const resp = await fetch(url, {
-          method: 'GET',
-          headers: buildRequestHeaders()
-        });
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const remoteJson = await resp.json();
-        const applied = applyCloudPayload(remoteJson);
-
-        if (applied) {
-          recordAudit('Datos actualizados desde la nube en línea');
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-          state.lastSyncedAt = new Date().toLocaleTimeString('es-NI', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-          });
-          state.syncStatus = 'online';
-          state.syncDetail = `ONLINE · Actualizado ${state.lastSyncedAt}`;
-          updateSyncStatusUI();
-          render();
-          if (showFeedback) notify('Cambios en línea descargados y aplicados.', 'success');
-        } else {
-          state.syncStatus = 'online';
-          state.syncDetail = 'ONLINE · Sin datos nuevos';
-          updateSyncStatusUI();
-          if (showFeedback) notify('Conexión activa; no se encontraron registros nuevos en la nube.', 'info');
-        }
-      } catch (err) {
-        state.syncStatus = 'error';
-        state.syncDetail = 'Error al consultar nube';
-        updateSyncStatusUI();
-        if (showFeedback) notify('Error al obtener datos desde el endpoint en línea.', 'error');
-      }
-    }
-
-    function updateSyncStatusUI() {
-      const dotEl = document.getElementById('syncDotIndicator');
-      const labelEl = document.getElementById('syncStatusLabel');
-      const queueEl = document.getElementById('syncQueueBadge');
-      if (!dotEl || !labelEl) return;
-
-      dotEl.className = 'sync-dot';
-      if (!navigator.onLine || state.syncStatus === 'offline') {
-        dotEl.classList.add('offline');
-        labelEl.textContent = state.syncDetail || 'Sin señal · Cola activa';
-      } else if (state.syncStatus === 'syncing') {
-        dotEl.classList.add('syncing');
-        labelEl.textContent = state.syncDetail || 'Sincronizando...';
-      } else if (state.syncStatus === 'error') {
-        dotEl.classList.add('error');
-        labelEl.textContent = state.syncDetail || 'Reintentando conexión...';
-      } else {
-        labelEl.textContent = state.syncDetail || `ONLINE · Guardado ${state.lastSavedAt}`;
-      }
-
-      if (queueEl) {
-        const qLen = Array.isArray(db.pendingSyncQueue) ? db.pendingSyncQueue.length : 0;
-        queueEl.textContent = qLen > 0 ? `Cola: ${qLen}` : 'Cola: 0';
-      }
-    }
-
-    function saveOnlineConfigForm(event) {
-      event.preventDefault();
-      if (!isAdmin()) return;
-      const fd = new FormData(event.target);
-      db.onlineConfig = {
-        enabled: fd.get('enabled') === 'on',
-        mode: String(fd.get('mode') || 'rest'),
-        endpointUrl: String(fd.get('endpointUrl') || '').trim(),
-        apiKey: String(fd.get('apiKey') || '').trim(),
-        authToken: String(fd.get('authToken') || '').trim(),
-        documentPath: String(fd.get('documentPath') || 'inggl/2026/database').trim() || 'inggl/2026/database',
-        autoPullSeconds: Math.max(5, Number(fd.get('autoPullSeconds') || 15))
-      };
-      saveDatabase('Configuración de sincronización ONLINE actualizada', true);
-      setupAutoPullInterval();
-      if (db.onlineConfig.enabled && db.onlineConfig.endpointUrl) {
-        flushSyncQueue(true);
-      }
-    }
-
-    let autoPullTimerId = null;
-    function setupAutoPullInterval() {
-      if (autoPullTimerId) {
-        clearInterval(autoPullTimerId);
-        autoPullTimerId = null;
-      }
-      const sec = Number(db?.onlineConfig?.autoPullSeconds || 15);
-      if (db?.onlineConfig?.enabled && db?.onlineConfig?.endpointUrl) {
-        autoPullTimerId = setInterval(() => {
-          if (navigator.onLine && state.currentUser && (!db.pendingSyncQueue || db.pendingSyncQueue.length === 0)) {
-            pullLatestFromCloud(false);
-          }
-        }, sec * 1000);
-      }
-    }
-
-    /* ========================================================================
-       PERMISOS, TURNOS Y CÁLCULOS ACADÉMICOS
-       ======================================================================== */
-    function isAdmin() {
-      return Boolean(state.currentUser && state.currentUser.role === 'admin');
-    }
-
-    function getSectionTurno(sectionName) {
-      return db.sectionTurnos[sectionName] || 'Matutino';
-    }
-
-    function getAccessibleSections() {
-      const allSections = [];
-      GRADOS.forEach((g) => SECCIONES.forEach((s) => allSections.push(`${g} ${s}`)));
-      if (isAdmin()) return allSections;
-      const u = state.currentUser;
-      if (!u) return [];
-      const set = new Set();
-      if (u.guideSection) set.add(u.guideSection);
-      db.students.forEach((st) => {
-        if (u.turno && u.turno !== 'Todos' && getSectionTurno(st.section) !== u.turno) return;
-        set.add(st.section);
-      });
-      if (set.size === 0) {
-        allSections.forEach((sec) => {
-          if (!u.turno || u.turno === 'Todos' || getSectionTurno(sec) === u.turno) {
-            set.add(sec);
-          }
-        });
-      }
-      return Array.from(set);
-    }
-
-    function ensureValidSelectedSection() {
-      const acc = getAccessibleSections();
-      if (acc.length > 0 && !acc.includes(state.selectedSection)) {
-        state.selectedSection = acc[0];
-      }
-    }
-
-    function canEditSubject(subjectId) {
-      if (!state.currentUser) return false;
-      if (isAdmin()) return true;
-      const assigned = state.currentUser.assignedSubjects || [];
-      return assigned.includes('*') || assigned.includes(subjectId);
-    }
-
-    function isGuideOfSection(sectionName) {
-      if (!state.currentUser) return false;
-      if (isAdmin()) return true;
-      return state.currentUser.guideSection === sectionName;
-    }
-
-    function getGradeValue(studentId, periodId, subjectId) {
-      return db.grades?.[studentId]?.[periodId]?.[subjectId] ?? '';
-    }
-
-    function setGradeValue(studentId, periodId, subjectId, rawValue) {
-      if (!db.grades[studentId]) db.grades[studentId] = {};
-      if (!db.grades[studentId][periodId]) db.grades[studentId][periodId] = {};
-      if (rawValue === '' || rawValue === null || rawValue === undefined) {
-        delete db.grades[studentId][periodId][subjectId];
-      } else {
-        db.grades[studentId][periodId][subjectId] = rawValue;
-      }
-    }
-
-    function parseNumericGrade(val) {
-      if (val === '' || val === null || val === undefined) return null;
-      const n = Number(val);
-      if (Number.isNaN(n)) return null;
-      return Math.max(0, Math.min(100, Math.round(n)));
-    }
-
-    function numericToQualitative(score) {
-      if (score === null || score === undefined || Number.isNaN(Number(score))) return '';
-      const n = Number(score);
-      if (n >= 90) return 'AA';
-      if (n >= 76) return 'AS';
-      if (n >= 60) return 'AF';
-      return 'AI';
-    }
-
-    function computeSubjectScoreForPeriod(studentId, subjectId, periodId) {
-      if (periodId === 'corte1' || periodId === 'corte2' || periodId === 'corte3' || periodId === 'corte4') {
-        return parseNumericGrade(getGradeValue(studentId, periodId, subjectId));
-      }
-      if (periodId === 'semestral1') {
-        const c1 = parseNumericGrade(getGradeValue(studentId, 'corte1', subjectId));
-        const c2 = parseNumericGrade(getGradeValue(studentId, 'corte2', subjectId));
-        if (c1 === null && c2 === null) return null;
-        return Math.round(((c1 ?? 0) + (c2 ?? 0)) / ((c1 !== null ? 1 : 0) + (c2 !== null ? 1 : 0)));
-      }
-      if (periodId === 'semestral2') {
-        const c3 = parseNumericGrade(getGradeValue(studentId, 'corte3', subjectId));
-        const c4 = parseNumericGrade(getGradeValue(studentId, 'corte4', subjectId));
-        if (c3 === null && c4 === null) return null;
-        return Math.round(((c3 ?? 0) + (c4 ?? 0)) / ((c3 !== null ? 1 : 0) + (c4 !== null ? 1 : 0)));
-      }
-      if (periodId === 'anual') {
-        const s1 = computeSubjectScoreForPeriod(studentId, subjectId, 'semestral1');
-        const s2 = computeSubjectScoreForPeriod(studentId, subjectId, 'semestral2');
-        if (s1 === null && s2 === null) return null;
-        return Math.round(((s1 ?? 0) + (s2 ?? 0)) / ((s1 !== null ? 1 : 0) + (s2 !== null ? 1 : 0)));
-      }
-      return null;
-    }
-
-    function computeStudentAverageCuan(student, periodId) {
-      const curr = getCurriculumForGrade(student.grade);
-      const scores = [];
-      curr.cuan.forEach((subj) => {
-        const sc = computeSubjectScoreForPeriod(student.id, subj.id, periodId);
-        if (sc !== null) scores.push(sc);
-      });
-      if (scores.length === 0) return null;
-      const sum = scores.reduce((acc, v) => acc + v, 0);
-      return Number((sum / scores.length).toFixed(1));
-    }
-
-    function isPeriodEditableDirectly(periodId) {
-      return periodId === 'corte1' || periodId === 'corte2' || periodId === 'corte3' || periodId === 'corte4';
-    }
-
-    /* ========================================================================
-       AUTENTICACIÓN Y GESTIÓN DE USUARIOS / ESTUDIANTES
-       ======================================================================== */
-    function loginUser(username, password) {
-      const cleanUser = String(username || '').trim().toLowerCase();
-      const cleanPass = String(password || '').trim();
-      const found = db.users.find(
-        (u) => u.username.toLowerCase() === cleanUser && String(u.password) === cleanPass
-      );
-      if (!found) {
-        state.loginError = 'Usuario o contraseña incorrectos.';
-        render();
-        return;
-      }
-      state.currentUser = found;
-      state.loginError = '';
-      state.activeTab = 'registro';
-      ensureValidSelectedSection();
-      recordAudit('Inicio de sesión');
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-      render();
-      if (navigator.onLine && db.onlineConfig && db.onlineConfig.enabled && db.onlineConfig.endpointUrl) {
-        pullLatestFromCloud(false);
-      }
-    }
-
-    function logoutUser() {
-      recordAudit('Cierre de sesión');
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-      state.currentUser = null;
-      state.loginError = '';
-      render();
-    }
-
-    function handleLoginSubmit(event) {
-      event.preventDefault();
-      const fd = new FormData(event.target);
-      loginUser(fd.get('username'), fd.get('password'));
-    }
-
-    function handleGradeNumberInput(studentId, subjectId, inputEl) {
-      if (!isPeriodEditableDirectly(state.selectedPeriod)) return;
-      if (!canEditSubject(subjectId)) return;
-
-      let raw = inputEl.value.trim();
-      if (raw === '') {
-        setGradeValue(studentId, state.selectedPeriod, subjectId, '');
-        saveDatabase(`Nota borrada (${subjectId})`, false);
-        render();
-        return;
-      }
-      let num = Number(raw);
-      if (Number.isNaN(num)) {
-        inputEl.value = '';
-        return;
-      }
-      num = Math.max(0, Math.min(100, Math.round(num)));
-      inputEl.value = String(num);
-      setGradeValue(studentId, state.selectedPeriod, subjectId, num);
-      saveDatabase(`Calificación CUAN registrada (${subjectId}: ${num})`, false);
-      render();
-    }
-
-    function handleGradeQualSelect(studentId, subjectId, selectEl) {
-      if (!isPeriodEditableDirectly(state.selectedPeriod)) return;
-      if (!canEditSubject(subjectId)) return;
-      const val = selectEl.value;
-      setGradeValue(studentId, state.selectedPeriod, subjectId, val);
-      saveDatabase(`Calificación CUAL registrada (${subjectId}: ${val || 'vacío'})`, false);
-      render();
-    }
-
-    function addStudentForm(event) {
-      event.preventDefault();
-      if (!state.currentUser) return;
-      const fd = new FormData(event.target);
-      const name = String(fd.get('studentName') || '').trim();
-      const sex = fd.get('sex') === 'M' ? 'M' : 'F';
-      const code = String(fd.get('code') || '').trim();
-      const section = String(fd.get('section') || state.selectedSection).trim();
-      const grade = section.split(' ')[0] || '7mo';
-
-      if (!isAdmin() && !isGuideOfSection(section)) {
-        notify('Solo Dirección o el docente guía de esa sección pueden agregar estudiantes.', 'error');
-        return;
-      }
-      if (!name) {
-        notify('Ingrese el nombre completo del estudiante.', 'error');
-        return;
-      }
-
-      const newStudent = {
-        id: `stu-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        code: code || `2026-${String(db.students.length + 1).padStart(3, '0')}`,
-        name,
-        sex,
-        grade,
-        section
-      };
-      db.students.push(newStudent);
-      state.selectedSection = section;
-      saveDatabase(`Estudiante agregado: ${name} (${section})`, true);
-      event.target.reset();
-      render();
-    }
-
-    function removeStudent(studentId) {
-      if (!state.currentUser) return;
-      const stu = db.students.find((s) => s.id === studentId);
-      if (!stu) return;
-      if (!isAdmin() && !isGuideOfSection(stu.section)) {
-        notify('No tiene permiso para eliminar estudiantes de esta sección.', 'error');
-        return;
-      }
-      db.students = db.students.filter((s) => s.id !== studentId);
-      delete db.grades[studentId];
-      saveDatabase(`Estudiante eliminado: ${stu.name} (${stu.section})`, true);
-      render();
-    }
-
-    function addTeacherForm(event) {
-      event.preventDefault();
-      if (!isAdmin()) return;
-      const fd = new FormData(event.target);
-      const name = String(fd.get('name') || '').trim();
-      const username = String(fd.get('username') || '').trim().toLowerCase();
-      const password = String(fd.get('password') || '').trim() || '123';
-      const turno = String(fd.get('turno') || 'Matutino');
-      const guideSection = String(fd.get('guideSection') || '') || null;
-      const assignedSubjects = fd.getAll('subjects').map(String);
-
-      if (!name || !username) {
-        notify('Complete el nombre y el usuario del docente.', 'error');
-        return;
-      }
-      if (db.users.some((u) => u.username.toLowerCase() === username)) {
-        notify('Ese nombre de usuario ya existe.', 'error');
-        return;
-      }
-
-      db.users.push({
-        id: `u-${Date.now()}`,
-        name,
-        username,
-        password,
-        role: 'teacher',
-        turno,
-        guideSection,
-        assignedSubjects: assignedSubjects.length > 0 ? assignedSubjects : ['lengua']
-      });
-      saveDatabase(`Docente creado: ${name} (@${username})`, true);
-      event.target.reset();
-      render();
-    }
-
-    function removeTeacher(userId) {
-      if (!isAdmin()) return;
-      const target = db.users.find((u) => u.id === userId);
-      if (!target || target.role === 'admin') return;
-      db.users = db.users.filter((u) => u.id !== userId);
-      saveDatabase(`Docente eliminado: ${target.name}`, true);
-      render();
-    }
-
-    function updateSectionTurno(sectionName, newTurno) {
-      if (!isAdmin()) return;
-      if (!TURNOS.includes(newTurno)) return;
-      db.sectionTurnos[sectionName] = newTurno;
-      saveDatabase(`Turno de ${sectionName} cambiado a ${newTurno}`, true);
-      render();
-    }
-
-    /* ========================================================================
-       EXPORTACIÓN A EXCEL (.XLS) Y RESPALDO JSON
-       ======================================================================== */
-    function exportHtmlTableToExcel(filename, title, subtitle, tableHtml) {
-      const logoMarkup = db.customLogo
-        ? `<img src="${db.customLogo}" alt="Logo" style="height:54px;width:auto;" />`
-        : `<strong>INGGL</strong>`;
-
-      const fullHtml = `
-        <html xmlns:o="urn:schemas-microsoft-com:office:office"
-              xmlns:x="urn:schemas-microsoft-com:office:excel"
-              xmlns="http://www.w3.org/TR/REC-html40">
-        <head>
-          <meta charset="UTF-8" />
-          <style>
-            table { border-collapse: collapse; font-family: Arial, sans-serif; font-size: 11pt; }
-            th, td { border: 1px solid #94a3b8; padding: 6px 8px; }
-            th { background-color: #0c1d5e; color: #ffffff; font-weight: bold; }
-          </style>
-        </head>
-        <body>
-          <table>
-            <tr>
-              <td>${logoMarkup}</td>
-              <td colspan="6">
-                <div style="font-size:14pt;font-weight:bold;color:#0c1d5e;">${escapeHtml(db.schoolName)}</div>
-                <div>${escapeHtml(db.schoolLocation)} — ${escapeHtml(db.motto)}</div>
-                <div style="font-weight:bold;margin-top:4px;">${escapeHtml(title)}</div>
-                <div>${escapeHtml(subtitle)}</div>
-              </td>
-            </tr>
-          </table>
-          <br/>
-          ${tableHtml}
-        </body>
-        </html>
-      `;
-
-      const blob = new Blob([fullHtml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      recordAudit(`Exportado Excel: ${filename}`);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-      notify(`Archivo ${filename} descargado.`, 'success');
-    }
-
-    function exportCurrentConsolidadoExcel() {
-      const section = state.selectedSection;
-      const turno = getSectionTurno(section);
-      const periodObj = PERIODOS.find((p) => p.id === state.selectedPeriod) || PERIODOS[0];
-      const grade = section.split(' ')[0] || '7mo';
-      const curr = getCurriculumForGrade(grade);
-      const students = db.students.filter((s) => s.section === section);
-
-      let headCells = '<th>#</th><th>Código</th><th>Estudiante</th><th>Sexo</th>';
-      curr.cuan.forEach((c) => { headCells += `<th>${escapeHtml(c.short)}</th>`; });
-      curr.cual.forEach((q) => { headCells += `<th>${escapeHtml(q.short)}</th>`; });
-      headCells += '<th>Prom. CUAN</th><th>Equiv.</th>';
-
-      const bodyRows = students.map((stu, idx) => {
-        const avg = computeStudentAverageCuan(stu, periodObj.id);
-        const eq = numericToQualitative(avg);
-        let cells = `<td>${idx + 1}</td><td>${escapeHtml(stu.code)}</td><td>${escapeHtml(stu.name)}</td><td>${escapeHtml(stu.sex)}</td>`;
-        curr.cuan.forEach((c) => {
-          const v = computeSubjectScoreForPeriod(stu.id, c.id, periodObj.id);
-          cells += `<td>${v !== null ? v : ''}</td>`;
-        });
-        curr.cual.forEach((q) => {
-          const v = getGradeValue(stu.id, periodObj.id, q.id);
-          cells += `<td>${escapeHtml(v || '')}</td>`;
-        });
-        cells += `<td><strong>${avg !== null ? avg : ''}</strong></td><td>${escapeHtml(eq)}</td>`;
-        return `<tr>${cells}</tr>`;
-      }).join('');
-
-      exportHtmlTableToExcel(
-        `Consolidado_${section.replace(/\s+/g, '_')}_${turno}_${periodObj.id}.xls`,
-        `Consolidado de Calificaciones — ${section} (Turno ${turno})`,
-        `Período: ${periodObj.label} · Año Lectivo ${db.year}`,
-        `<table><thead><tr>${headCells}</tr></thead><tbody>${bodyRows}</tbody></table>`
-      );
-    }
-
-    function exportRendimientoExcel() {
-      const turno = state.selectedRendTurno;
-      const periodObj = PERIODOS.find((p) => p.id === state.selectedRendPeriod) || PERIODOS[0];
-      const sectionsInTurno = Object.keys(db.sectionTurnos).filter((sec) => getSectionTurno(sec) === turno);
-
-      const rowsHtml = sectionsInTurno.map((sec) => {
-        const stus = db.students.filter((s) => s.section === sec);
-        let evalCount = 0;
-        let apprCount = 0;
-        let failCount = 0;
-        let sumAvg = 0;
-
-        stus.forEach((stu) => {
-          const avg = computeStudentAverageCuan(stu, periodObj.id);
-          if (avg !== null) {
-            evalCount++;
-            sumAvg += avg;
-            if (avg >= 60) apprCount++;
-            else failCount++;
-          }
-        });
-
-        const pct = evalCount > 0 ? `${((apprCount / evalCount) * 100).toFixed(1)}%` : '0.0%';
-        const prom = evalCount > 0 ? (sumAvg / evalCount).toFixed(1) : '0.0';
-        return `<tr><td>${escapeHtml(sec)}</td><td>${stus.length}</td><td>${evalCount}</td><td>${apprCount}</td><td>${failCount}</td><td>${pct}</td><td>${prom}</td></tr>`;
-      }).join('');
-
-      exportHtmlTableToExcel(
-        `Rendimiento_Turno_${turno}_${periodObj.id}.xls`,
-        `Rendimiento Académico — Turno ${turno}`,
-        `Período: ${periodObj.label} · Año Lectivo ${db.year}`,
-        `<table><thead><tr><th>Sección</th><th>Matrícula</th><th>Evaluados</th><th>Aprobados</th><th>Reprobados</th><th>% Aprobación</th><th>Promedio</th></tr></thead><tbody>${rowsHtml}</tbody></table>`
-      );
-    }
-
-    function exportDatabaseJson() {
-      const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `Respaldo_INGGL_${new Date().toISOString().slice(0, 10)}.json`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      notify('Respaldo JSON descargado.', 'success');
-    }
-
-    function importDatabaseJson(inputEl) {
-      const file = inputEl && inputEl.files && inputEl.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (ev) {
-        try {
-          const parsed = JSON.parse(String(ev.target.result || ''));
-          if (!parsed || !Array.isArray(parsed.students) || !Array.isArray(parsed.users)) {
-            notify('El archivo JSON no corresponde a la estructura del sistema.', 'error');
-            return;
-          }
-          const defaults = buildInitialDatabase();
-          db = {
-            ...defaults,
-            ...parsed,
-            sectionTurnos: parsed.sectionTurnos || defaults.sectionTurnos,
-            onlineConfig: { ...defaults.onlineConfig, ...(parsed.onlineConfig || {}) }
-          };
-          saveDatabase('Respaldo JSON restaurado', true);
-          ensureValidSelectedSection();
-          render();
-        } catch (err) {
-          notify('No se pudo leer el archivo JSON.', 'error');
-        }
-      };
-      reader.readAsText(file);
-      inputEl.value = '';
-    }
-
-    /* ========================================================================
-       VISTAS DE INTERFAZ
-       ======================================================================== */
-    function renderLoginView() {
-      return `
-        <header class="topbar">
-          <div class="topbar-inner">
-            <div class="brand-group">
-              ${renderSchoolLogo(48)}
-              <div>
-                <h1 class="brand-title">${escapeHtml(db.schoolName)}</h1>
-                <p class="brand-sub">${escapeHtml(db.schoolLocation)} • ${escapeHtml(db.motto)}</p>
-              </div>
-            </div>
-            <div class="topbar-actions">
-              <span class="user-pill">Año Lectivo ${escapeHtml(db.year)}</span>
-            </div>
+        <form onsubmit="handleLogin(event)">
+          <div class="field">
+            <label for="loginUser">Usuario</label>
+            <input type="text" id="loginUser" placeholder="Ej. direccion o usuario docente" required autocomplete="username" />
           </div>
-        </header>
-
-        <main class="main-container">
-          <div class="login-wrapper">
-            <div class="card">
-              <div class="card-header">
-                <div>
-                  <h2 class="card-title">Inicio de Sesión — Registro de Calificaciones</h2>
-                  <p class="card-subtitle">Acceso para Dirección y Docentes · Turno Matutino y Vespertino</p>
-                </div>
-              </div>
-
-              <div class="logo-box" style="margin-bottom:14px;">
-                ${renderSchoolLogo(56)}
-                <div style="flex:1;min-width:180px;">
-                  <div style="font-weight:700;font-size:13px;color:var(--navy-900);">Logo Institucional</div>
-                  <div class="muted-note">Personalízalo o restablécelo en cualquier momento.</div>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                  <label class="btn btn-secondary btn-sm" style="margin:0;cursor:pointer;">
-                    Subir / Cambiar Logo
-                    <input type="file" accept="image/*" style="display:none;" onchange="handleLogoFileUpload(this)" />
-                  </label>
-                  <button type="button" class="btn btn-secondary btn-sm" onclick="resetSchoolLogo()">Quitar Logo</button>
-                </div>
-              </div>
-
-              ${state.loginError ? `
-                <div class="alert-box" style="background:#fef2f2;border-color:#fecaca;color:#991b1b;">
-                  ${escapeHtml(state.loginError)}
-                </div>
-              ` : ''}
-
-              <form onsubmit="handleLoginSubmit(event)">
-                <div class="grid-2">
-                  <div class="form-group">
-                    <label class="form-label" for="loginUsername">Usuario</label>
-                    <input id="loginUsername" name="username" type="text" class="form-control" required placeholder="Ej. direccion" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="loginPassword">Contraseña</label>
-                    <input id="loginPassword" name="password" type="password" class="form-control" required placeholder="Contraseña" />
-                  </div>
-                </div>
-                <div style="margin-top:12px;display:flex;justify-content:flex-end;">
-                  <button type="submit" class="btn btn-primary">Ingresar al Sistema</button>
-                </div>
-              </form>
-
-              <div class="demo-panel">
-                <div class="demo-item">
-                  <div>
-                    <strong>Cuenta inicial de Dirección:</strong> usuario <code>direccion</code> · clave <code>123</code>
-                  </div>
-                  <button type="button" class="btn btn-primary btn-sm" onclick="loginUser('direccion', '123')">
-                    Entrar como Dirección
-                  </button>
-                </div>
-              </div>
-            </div>
+          <div class="field">
+            <label for="loginPass">Contraseña</label>
+            <input type="password" id="loginPass" placeholder="Contraseña" required autocomplete="current-password" />
           </div>
-        </main>
-      `;
-    }
+          <button type="submit" class="btn btn-primary" style="width:100%;">Ingresar al Sistema</button>
+        </form>
 
-    function renderRegistroTab() {
-      const accessible = getAccessibleSections();
-      const filteredSections = state.selectedTurnoFilter === 'Todos'
-        ? accessible
-        : accessible.filter((sec) => getSectionTurno(sec) === state.selectedTurnoFilter);
+        <div class="alert alert-info" style="margin-top:14px; margin-bottom:0;">
+          <strong>Cuenta inicial de Dirección:</strong> Usuario <code>direccion</code> · Clave <code>inggl2026</code>.
+          Desde Dirección puedes gestionar turnos (<strong>Matutino</strong> y <strong>Vespertino</strong>), grados (<strong>7mo a 11mo</strong>), secciones (<strong>A a H</strong>), docentes y sincronización en línea.
+        </div>
+      </div>
+    </section>
 
-      const currentSec = filteredSections.includes(state.selectedSection)
-        ? state.selectedSection
-        : (filteredSections[0] || accessible[0] || '7mo A');
+    <!-- APLICACIÓN PRINCIPAL -->
+    <section id="appSection" class="hidden">
+      <div class="card" style="padding:12px 16px;">
+        <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+          <div>
+            <span style="font-size:13px; color:var(--muted);">Sesión activa:</span>
+            <strong id="sessionUserLabel" style="font-size:14px; color:var(--primary-dark);"></strong>
+            <span id="sessionRolePill" class="pill pill-cuan" style="margin-left:6px;"></span>
+            <span id="activeShiftBannerPill" class="pill pill-shift-m" style="margin-left:4px;">Turno Matutino</span>
+          </div>
 
-      const turnoActual = getSectionTurno(currentSec);
-      const grade = currentSec.split(' ')[0] || '7mo';
-      const curr = getCurriculumForGrade(grade);
-      const editablePeriod = isPeriodEditableDirectly(state.selectedPeriod);
+          <div class="grid-4" style="gap:8px; margin:0; align-items:center; min-width:300px;">
+            <select id="activeShiftSelect" onchange="onFilterChange()">
+              <option value="Matutino">Turno Matutino</option>
+              <option value="Vespertino">Turno Vespertino</option>
+            </select>
+            <select id="activeGradeSelect" onchange="onFilterChange()">
+              <option value="7mo">7mo Grado</option>
+              <option value="8vo">8vo Grado</option>
+              <option value="9no">9no Grado</option>
+              <option value="10mo">10mo Grado</option>
+              <option value="11mo">11mo Grado</option>
+            </select>
+            <select id="activeSectionSelect" onchange="onFilterChange()">
+              <option value="A">Sección A</option>
+              <option value="B">Sección B</option>
+              <option value="C">Sección C</option>
+              <option value="D">Sección D</option>
+              <option value="E">Sección E</option>
+              <option value="F">Sección F</option>
+              <option value="G">Sección G</option>
+              <option value="H">Sección H</option>
+            </select>
+            <select id="activePeriodSelect" onchange="onFilterChange()">
+              <option value="I Corte">I Corte Evaluativo</option>
+              <option value="II Corte">II Corte Evaluativo</option>
+              <option value="III Corte">III Corte Evaluativo</option>
+              <option value="IV Corte">IV Corte Evaluativo</option>
+              <option value="Semestral">Consolidado Semestral</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-      const query = state.studentSearch.trim().toLowerCase();
-      const sectionStudents = db.students.filter((s) => {
-        if (s.section !== currentSec) return false;
-        if (!query) return true;
-        return s.name.toLowerCase().includes(query) || String(s.code || '').toLowerCase().includes(query);
-      });
+      <div class="tabs" id="mainTabs">
+        <button class="tab-btn active" data-tab="gradesTab" onclick="switchTab('gradesTab')">Registro de Notas</button>
+        <button class="tab-btn" data-tab="studentsTab" onclick="switchTab('studentsTab')">Estudiantes</button>
+        <button class="tab-btn" data-tab="guideTab" onclick="switchTab('guideTab')">Rendimiento de Guía</button>
+        <button class="tab-btn" data-tab="reportsTab" onclick="switchTab('reportsTab')">Consolidados y Excel</button>
+        <button class="tab-btn dir-only" data-tab="teachersTab" onclick="switchTab('teachersTab')">Docentes y Turnos</button>
+        <button class="tab-btn dir-only" data-tab="syncTab" onclick="switchTab('syncTab')">Sincronización Online</button>
+      </div>
 
-      const canAddHere = isAdmin() || isGuideOfSection(currentSec);
-
-      let thRow1 = `
-        <th rowspan="2">#</th>
-        <th rowspan="2">Código</th>
-        <th rowspan="2" class="left">Estudiante</th>
-        <th rowspan="2">Sexo</th>
-        <th colspan="${curr.cuan.length}">Asignaturas Cuantitativas (0 - 100)</th>
-        <th colspan="${curr.cual.length}" class="qual-th">Cualitativas (AA / AS / AF / AI)</th>
-        <th rowspan="2">Prom. CUAN</th>
-        <th rowspan="2">Equiv.</th>
-        ${canAddHere ? '<th rowspan="2">Acción</th>' : ''}
-      `;
-
-      let thRow2 = '';
-      curr.cuan.forEach((c) => {
-        thRow2 += `<th class="sub-th" title="${escapeHtml(c.name)}">${escapeHtml(c.short)}</th>`;
-      });
-      curr.cual.forEach((q) => {
-        thRow2 += `<th class="sub-th" title="${escapeHtml(q.name)}">${escapeHtml(q.short)}</th>`;
-      });
-
-      const bodyRows = sectionStudents.map((stu, idx) => {
-        const avg = computeStudentAverageCuan(stu, state.selectedPeriod);
-        const eq = numericToQualitative(avg);
-        const eqBadgeClass = eq === 'AI' ? 'badge-red' : (eq ? 'badge-green' : 'badge-navy');
-
-        let cuanCells = '';
-        curr.cuan.forEach((c) => {
-          const allowed = editablePeriod && canEditSubject(c.id);
-          const val = allowed
-            ? (getGradeValue(stu.id, state.selectedPeriod, c.id) ?? '')
-            : (computeSubjectScoreForPeriod(stu.id, c.id, state.selectedPeriod) ?? '');
-          if (allowed) {
-            cuanCells += `
-              <td>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  class="grade-num-input"
-                  value="${escapeHtml(val)}"
-                  onchange="handleGradeNumberInput('${stu.id}', '${c.id}', this)"
-                />
-              </td>
-            `;
-          } else {
-            cuanCells += `<td class="locked-cell">${val !== '' ? escapeHtml(val) : '—'}</td>`;
-          }
-        });
-
-        let cualCells = '';
-        curr.cual.forEach((q) => {
-          const allowed = editablePeriod && canEditSubject(q.id);
-          const val = getGradeValue(stu.id, state.selectedPeriod, q.id) || '';
-          if (allowed) {
-            cualCells += `
-              <td>
-                <select class="grade-qual-select" onchange="handleGradeQualSelect('${stu.id}', '${q.id}', this)">
-                  ${QUAL_OPTIONS.map((opt) => `<option value="${opt}" ${val === opt ? 'selected' : ''}>${opt || '—'}</option>`).join('')}
-                </select>
-              </td>
-            `;
-          } else {
-            cualCells += `<td class="locked-cell">${val ? escapeHtml(val) : '—'}</td>`;
-          }
-        });
-
-        return `
-          <tr>
-            <td>${idx + 1}</td>
-            <td>${escapeHtml(stu.code)}</td>
-            <td class="left" style="font-weight:700;">${escapeHtml(stu.name)}</td>
-            <td>${escapeHtml(stu.sex)}</td>
-            ${cuanCells}
-            ${cualCells}
-            <td style="font-weight:800;">${avg !== null ? avg : '—'}</td>
-            <td>${eq ? `<span class="badge ${eqBadgeClass}">${eq}</span>` : '—'}</td>
-            ${canAddHere ? `<td><button type="button" class="btn btn-danger btn-sm" onclick="removeStudent('${stu.id}')">Quitar</button></td>` : ''}
-          </tr>
-        `;
-      }).join('');
-
-      return `
+      <!-- TAB 1: REGISTRO DE NOTAS -->
+      <div id="gradesTab" class="tab-panel">
         <div class="card">
           <div class="card-header">
             <div>
-              <h2 class="card-title">Registro de Calificaciones — ${escapeHtml(currentSec)}</h2>
-              <p class="card-subtitle">
-                Turno: <span class="badge ${turnoActual === 'Matutino' ? 'badge-navy' : 'badge-amber'}">${escapeHtml(turnoActual)}</span>
-                · Cada nota o estudiante ingresado se guarda automáticamente.
-              </p>
+              <div class="card-title" id="gradesCardTitle">Registro de Calificaciones</div>
+              <div class="card-subtitle">
+                Las asignaturas <strong>CUAN</strong> llevan nota numérica (0–100) y calculan el promedio cuantitativo. Las asignaturas <strong>CUAL</strong> (<em>TAC, AEP, Crecimiento en Valores, Derechos y Dignidad de las Mujeres, Educación Física y Práctica Deportiva</em>) aparecen exclusivamente con casilla cualitativa (<strong>AA, AS, AF, AI</strong>) y no se mezclan con el promedio numérico.
+              </div>
             </div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <button type="button" class="btn btn-success btn-sm" onclick="exportCurrentConsolidadoExcel()">Exportar Excel (.xls)</button>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button class="btn btn-primary btn-sm" onclick="persistAndSync('Registro manual guardado')">Guardar y Sincronizar</button>
             </div>
           </div>
 
-          <div class="grid-4" style="margin-bottom:14px;">
-            <div class="form-group">
-              <label class="form-label">Filtrar por Turno</label>
-              <select class="form-control" onchange="state.selectedTurnoFilter = this.value; render();">
-                <option value="Todos" ${state.selectedTurnoFilter === 'Todos' ? 'selected' : ''}>Todos los Turnos</option>
-                <option value="Matutino" ${state.selectedTurnoFilter === 'Matutino' ? 'selected' : ''}>Turno Matutino</option>
-                <option value="Vespertino" ${state.selectedTurnoFilter === 'Vespertino' ? 'selected' : ''}>Turno Vespertino</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Grado y Sección</label>
-              <select class="form-control" onchange="state.selectedSection = this.value; render();">
-                ${filteredSections.map((sec) => `<option value="${escapeHtml(sec)}" ${sec === currentSec ? 'selected' : ''}>${escapeHtml(sec)} (${getSectionTurno(sec)})</option>`).join('')}
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Corte / Período</label>
-              <select class="form-control" onchange="state.selectedPeriod = this.value; render();">
-                ${PERIODOS.map((p) => `<option value="${p.id}" ${p.id === state.selectedPeriod ? 'selected' : ''}>${escapeHtml(p.label)}</option>`).join('')}
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Buscar Estudiante</label>
-              <input
-                type="text"
-                class="form-control"
-                value="${escapeHtml(state.studentSearch)}"
-                placeholder="Nombre o código..."
-                oninput="state.studentSearch = this.value; render();"
-              />
-            </div>
+          <div id="gradesEmptyAlert" class="alert alert-warn hidden">
+            No hay estudiantes registrados en este turno, grado y sección. Ve a la pestaña <strong>Estudiantes</strong> para agregar estudiantes.
           </div>
-
-          ${!editablePeriod ? `
-            <div class="alert-box">
-              Estás viendo un período calculado (${escapeHtml((PERIODOS.find((p) => p.id === state.selectedPeriod) || {}).label || '')}). Para editar notas directamente, selecciona I, II, III o IV Corte Evaluativo.
-            </div>
-          ` : ''}
-
-          ${canAddHere ? `
-            <form onsubmit="addStudentForm(event)" class="grid-4" style="margin-bottom:14px;padding:12px;background:var(--bg-subtle);border-radius:var(--radius-md);border:1px solid var(--border-light);">
-              <div class="form-group">
-                <label class="form-label">Código Matrícula</label>
-                <input type="text" name="code" class="form-control" placeholder="Ej. 2026-001" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Nombre y Apellidos</label>
-                <input type="text" name="studentName" class="form-control" required placeholder="Nombre completo" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Sexo</label>
-                <select name="sex" class="form-control">
-                  <option value="F">Femenino (F)</option>
-                  <option value="M">Masculino (M)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Sección</label>
-                <select name="section" class="form-control">
-                  ${accessible.map((sec) => `<option value="${escapeHtml(sec)}" ${sec === currentSec ? 'selected' : ''}>${escapeHtml(sec)} (${getSectionTurno(sec)})</option>`).join('')}
-                </select>
-              </div>
-              <div style="grid-column:1 / -1;display:flex;justify-content:flex-end;">
-                <button type="submit" class="btn btn-primary btn-sm">+ Agregar Estudiante</button>
-              </div>
-            </form>
-          ` : ''}
 
           <div class="table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr>${thRow1}</tr>
-                <tr>${thRow2}</tr>
-              </thead>
-              <tbody>
-                ${bodyRows || `<tr><td colspan="25" style="padding:18px;color:var(--text-muted);">No hay estudiantes registrados en ${escapeHtml(currentSec)} (${escapeHtml(turnoActual)}).</td></tr>`}
-              </tbody>
+            <table id="gradesTable">
+              <thead id="gradesThead"></thead>
+              <tbody id="gradesTbody"></tbody>
             </table>
           </div>
         </div>
-      `;
-    }
+      </div>
 
-    function renderConsolidadoTab() {
-      const accessible = getAccessibleSections();
-      const currentSec = accessible.includes(state.selectedSection) ? state.selectedSection : (accessible[0] || '7mo A');
-      const turno = getSectionTurno(currentSec);
-      const periodObj = PERIODOS.find((p) => p.id === state.selectedPeriod) || PERIODOS[0];
-      const grade = currentSec.split(' ')[0] || '7mo';
-      const curr = getCurriculumForGrade(grade);
-      const students = db.students.filter((s) => s.section === currentSec);
-
-      const allSections = [];
-      GRADOS.forEach((g) => SECCIONES.forEach((s) => allSections.push(`${g} ${s}`)));
-
-      const turnoSummaryRows = allSections.map((sec) => {
-        const t = getSectionTurno(sec);
-        const stus = db.students.filter((s) => s.section === sec);
-        let evalCount = 0;
-        let apprCount = 0;
-        let sumAvg = 0;
-        stus.forEach((stu) => {
-          const avg = computeStudentAverageCuan(stu, periodObj.id);
-          if (avg !== null) {
-            evalCount++;
-            sumAvg += avg;
-            if (avg >= 60) apprCount++;
-          }
-        });
-        const pct = evalCount > 0 ? `${((apprCount / evalCount) * 100).toFixed(1)}%` : '0.0%';
-        const prom = evalCount > 0 ? (sumAvg / evalCount).toFixed(1) : '0.0';
-        return `
-          <tr>
-            <td class="left" style="font-weight:700;">${escapeHtml(sec)}</td>
-            <td><span class="badge ${t === 'Matutino' ? 'badge-navy' : 'badge-amber'}">${escapeHtml(t)}</span></td>
-            <td>${stus.length}</td>
-            <td>${apprCount}</td>
-            <td>${pct}</td>
-            <td style="font-weight:700;">${prom}</td>
-          </tr>
-        `;
-      }).join('');
-
-      const rowsHtml = students.map((stu, idx) => {
-        const avg = computeStudentAverageCuan(stu, periodObj.id);
-        const eq = numericToQualitative(avg);
-        let cells = `<td>${idx + 1}</td><td>${escapeHtml(stu.code)}</td><td class="left" style="font-weight:700;">${escapeHtml(stu.name)}</td><td>${escapeHtml(stu.sex)}</td>`;
-        curr.cuan.forEach((c) => {
-          const v = computeSubjectScoreForPeriod(stu.id, c.id, periodObj.id);
-          cells += `<td>${v !== null ? v : '—'}</td>`;
-        });
-        curr.cual.forEach((q) => {
-          const v = getGradeValue(stu.id, periodObj.id, q.id);
-          cells += `<td>${v ? escapeHtml(v) : '—'}</td>`;
-        });
-        cells += `<td style="font-weight:800;">${avg !== null ? avg : '—'}</td><td>${eq ? `<span class="badge ${eq === 'AI' ? 'badge-red' : 'badge-green'}">${eq}</span>` : '—'}</td>`;
-        return `<tr>${cells}</tr>`;
-      }).join('');
-
-      return `
+      <!-- TAB 2: ESTUDIANTES -->
+      <div id="studentsTab" class="tab-panel hidden">
         <div class="card">
           <div class="card-header">
             <div>
-              <h2 class="card-title">Consolidado de Sección — ${escapeHtml(currentSec)} (Turno ${escapeHtml(turno)})</h2>
-              <p class="card-subtitle">Período: ${escapeHtml(periodObj.label)} · Año Lectivo ${escapeHtml(db.year)}</p>
-            </div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <select class="select-sm" style="width:auto;" onchange="state.selectedSection = this.value; render();">
-                ${accessible.map((sec) => `<option value="${escapeHtml(sec)}" ${sec === currentSec ? 'selected' : ''}>${escapeHtml(sec)} (${getSectionTurno(sec)})</option>`).join('')}
-              </select>
-              <select class="select-sm" style="width:auto;" onchange="state.selectedPeriod = this.value; render();">
-                ${PERIODOS.map((p) => `<option value="${p.id}" ${p.id === state.selectedPeriod ? 'selected' : ''}>${escapeHtml(p.label)}</option>`).join('')}
-              </select>
-              <button type="button" class="btn btn-success btn-sm" onclick="exportCurrentConsolidadoExcel()">Descargar Excel (.xls)</button>
+              <div class="card-title" id="studentsCardTitle">Gestión de Estudiantes</div>
+              <div class="card-subtitle">Agrega o administra estudiantes según el turno (Matutino / Vespertino), grado (7mo a 11mo) y sección (A a H) seleccionados.</div>
             </div>
           </div>
 
+          <form onsubmit="addStudent(event)" class="grid-4" style="align-items:end; margin-bottom:14px;">
+            <div class="field" style="margin:0;">
+              <label for="stuCode">Código / Matrícula</label>
+              <input type="text" id="stuCode" placeholder="Ej. 2026-001" />
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="stuName">Nombre y Apellidos</label>
+              <input type="text" id="stuName" placeholder="Nombre completo del estudiante" required />
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="stuSex">Sexo</label>
+              <select id="stuSex">
+                <option value="F">Femenino (F)</option>
+                <option value="M">Masculino (M)</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0;">
+              <button type="submit" class="btn btn-primary" style="width:100%;">+ Agregar Estudiante</button>
+            </div>
+          </form>
+
           <div class="table-wrap">
-            <table class="data-table">
+            <table>
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Código</th>
-                  <th class="left">Estudiante</th>
+                  <th>Estudiante</th>
                   <th>Sexo</th>
-                  ${curr.cuan.map((c) => `<th class="sub-th">${escapeHtml(c.short)}</th>`).join('')}
-                  ${curr.cual.map((q) => `<th class="qual-th">${escapeHtml(q.short)}</th>`).join('')}
-                  <th>Prom. CUAN</th>
-                  <th>Equiv.</th>
+                  <th>Turno / Grado / Sec.</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
-                ${rowsHtml || `<tr><td colspan="22" style="padding:18px;color:var(--text-muted);">Sin registros en esta sección.</td></tr>`}
-              </tbody>
+              <tbody id="studentsTbody"></tbody>
             </table>
           </div>
         </div>
+      </div>
 
+      <!-- TAB 3: RENDIMIENTO DE GUÍA -->
+      <div id="guideTab" class="tab-panel hidden">
         <div class="card">
           <div class="card-header">
             <div>
-              <h3 class="card-title">Consolidado General por Turno (Matutino y Vespertino)</h3>
-              <p class="card-subtitle">Resumen de matrícula, aprobados, % aprobación y promedio por sección en ${escapeHtml(periodObj.label)}</p>
+              <div class="card-title" id="guideCardTitle">Rendimiento de Aula Guía</div>
+              <div class="card-subtitle">Resumen estadístico separado por asignaturas cuantitativas (CUAN) y asignaturas cualitativas (CUAL) en el turno, grado y sección seleccionados.</div>
             </div>
-          </div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th class="left">Sección</th>
-                  <th>Turno</th>
-                  <th>Matrícula</th>
-                  <th>Aprobados</th>
-                  <th>% Aprobación</th>
-                  <th>Promedio</th>
-                </tr>
-              </thead>
-              <tbody>${turnoSummaryRows}</tbody>
-            </table>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderRendimientosTab() {
-      const turno = state.selectedRendTurno;
-      const periodObj = PERIODOS.find((p) => p.id === state.selectedRendPeriod) || PERIODOS[0];
-      const sectionsInTurno = Object.keys(db.sectionTurnos).filter((sec) => getSectionTurno(sec) === turno);
-
-      let totalMat = 0;
-      let totalEval = 0;
-      let totalAppr = 0;
-      let sumProms = 0;
-
-      const rows = sectionsInTurno.map((sec) => {
-        const stus = db.students.filter((s) => s.section === sec);
-        totalMat += stus.length;
-
-        let evalCount = 0;
-        let apprCount = 0;
-        let failCount = 0;
-        let sumAvg = 0;
-
-        stus.forEach((stu) => {
-          const avg = computeStudentAverageCuan(stu, periodObj.id);
-          if (avg !== null) {
-            evalCount++;
-            sumAvg += avg;
-            if (avg >= 60) apprCount++;
-            else failCount++;
-          }
-        });
-
-        totalEval += evalCount;
-        totalAppr += apprCount;
-        const pct = evalCount > 0 ? `${((apprCount / evalCount) * 100).toFixed(1)}%` : '0.0%';
-        const promNum = evalCount > 0 ? (sumAvg / evalCount) : 0;
-        if (evalCount > 0) sumProms += promNum;
-
-        return {
-          sec,
-          mat: stus.length,
-          evalCount,
-          apprCount,
-          failCount,
-          pct,
-          prom: evalCount > 0 ? promNum.toFixed(1) : '0.0'
-        };
-      });
-
-      const generalPct = totalEval > 0 ? `${((totalAppr / totalEval) * 100).toFixed(1)}%` : '0.0%';
-      const activeSectionsCount = rows.filter((r) => r.evalCount > 0).length;
-      const generalProm = activeSectionsCount > 0 ? (sumProms / activeSectionsCount).toFixed(1) : '0.0';
-
-      return `
-        <div class="card">
-          <div class="card-header">
-            <div>
-              <h2 class="card-title">Rendimiento Académico y de Guía — Turno ${escapeHtml(turno)}</h2>
-              <p class="card-subtitle">Período: ${escapeHtml(periodObj.label)} · Año Lectivo ${escapeHtml(db.year)}</p>
-            </div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <select class="select-sm" style="width:auto;" onchange="state.selectedRendTurno = this.value; render();">
-                <option value="Matutino" ${turno === 'Matutino' ? 'selected' : ''}>Turno Matutino</option>
-                <option value="Vespertino" ${turno === 'Vespertino' ? 'selected' : ''}>Turno Vespertino</option>
-              </select>
-              <select class="select-sm" style="width:auto;" onchange="state.selectedRendPeriod = this.value; render();">
-                ${PERIODOS.map((p) => `<option value="${p.id}" ${p.id === state.selectedRendPeriod ? 'selected' : ''}>${escapeHtml(p.label)}</option>`).join('')}
-              </select>
-              <button type="button" class="btn btn-success btn-sm" onclick="exportRendimientoExcel()">Exportar Rendimiento (.xls)</button>
-            </div>
+            <button class="btn btn-accent btn-sm" onclick="exportPerformanceExcel()">Exportar Rendimiento (.xls)</button>
           </div>
 
-          <div class="grid-4" style="margin-bottom:14px;">
-            <div class="kpi-card">
-              <div class="kpi-label">Matrícula (${escapeHtml(turno)})</div>
-              <div class="kpi-value">${totalMat}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Aprobados</div>
-              <div class="kpi-value">${totalAppr}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">% Aprobación</div>
-              <div class="kpi-value">${generalPct}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Promedio Turno</div>
-              <div class="kpi-value">${generalProm}</div>
-            </div>
-          </div>
+          <div class="kpi-grid" id="guideKpis"></div>
 
           <div class="table-wrap">
-            <table class="data-table">
+            <table>
               <thead>
                 <tr>
-                  <th class="left">Sección</th>
-                  <th>Matrícula</th>
+                  <th>Asignatura</th>
+                  <th>Tipo</th>
                   <th>Evaluados</th>
                   <th>Aprobados</th>
                   <th>Reprobados</th>
                   <th>% Aprobación</th>
-                  <th>Promedio</th>
+                  <th>Promedio / Nivel Predominante</th>
                 </tr>
               </thead>
-              <tbody>
-                ${rows.map((r) => `
-                  <tr>
-                    <td class="left" style="font-weight:700;">${escapeHtml(r.sec)}</td>
-                    <td>${r.mat}</td>
-                    <td>${r.evalCount}</td>
-                    <td><span class="badge badge-green">${r.apprCount}</span></td>
-                    <td><span class="badge ${r.failCount > 0 ? 'badge-red' : 'badge-navy'}">${r.failCount}</span></td>
-                    <td style="font-weight:700;">${r.pct}</td>
-                    <td style="font-weight:800;">${r.prom}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
+              <tbody id="guideSubjectTbody"></tbody>
             </table>
           </div>
         </div>
-      `;
-    }
+      </div>
 
-    function renderDocentesTab() {
-      if (!isAdmin()) {
-        return `<div class="card"><p class="muted-note">Esta sección es exclusiva de Dirección.</p></div>`;
-      }
-
-      const allSections = [];
-      GRADOS.forEach((g) => SECCIONES.forEach((s) => allSections.push(`${g} ${s}`)));
-
-      const allSubjectChoices = [
-        { id: '*', label: 'Todas las Asignaturas' },
-        ...CUAN_10_11.map((c) => ({ id: c.id, label: c.name })),
-        { id: 'ccnn', label: 'Ciencias Naturales' },
-        { id: 'est_soc', label: 'Estudios Sociales' },
-        { id: 'tac', label: 'Taller de Arte y Cultura (TAC)' },
-        ...CUAL_SUBJECTS.map((q) => ({ id: q.id, label: q.name }))
-      ];
-
-      return `
+      <!-- TAB 4: CONSOLIDADOS Y EXCEL -->
+      <div id="reportsTab" class="tab-panel hidden">
         <div class="card">
           <div class="card-header">
             <div>
-              <h2 class="card-title">Asignación de Turnos (Matutino y Vespertino)</h2>
-              <p class="card-subtitle">Define qué turno corresponde a cada sección de 7mo a 11mo grado.</p>
+              <div class="card-title">Consolidado por Aula y Turno</div>
+              <div class="card-subtitle" id="consolidatedSubtitle">Sábana del turno, grado, sección y corte evaluativo seleccionados.</div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button class="btn btn-primary btn-sm" onclick="exportConsolidatedExcel()">Descargar Consolidado Aula (.xls)</button>
+              <button class="btn btn-accent btn-sm" onclick="exportPerformanceExcel()">Descargar Rendimiento (.xls)</button>
+              <button class="btn btn-light btn-sm" onclick="downloadJsonBackup()">Respaldo JSON</button>
+              <label class="btn btn-light btn-sm" style="cursor:pointer; margin:0;">
+                Cargar JSON
+                <input type="file" accept=".json,application/json" style="display:none;" onchange="importJsonBackup(event)" />
+              </label>
             </div>
           </div>
-          <div class="grid-3">
-            ${allSections.map((sec) => {
-              const currentT = getSectionTurno(sec);
-              return `
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid var(--border-light);border-radius:var(--radius-sm);background:var(--bg-subtle);">
-                  <strong style="font-size:13px;">${escapeHtml(sec)}</strong>
-                  <select class="select-sm" style="width:auto;" onchange="updateSectionTurno('${escapeHtml(sec)}', this.value)">
-                    <option value="Matutino" ${currentT === 'Matutino' ? 'selected' : ''}>Matutino</option>
-                    <option value="Vespertino" ${currentT === 'Vespertino' ? 'selected' : ''}>Vespertino</option>
-                  </select>
-                </div>
-              `;
-            }).join('')}
+
+          <div class="table-wrap">
+            <table>
+              <thead id="consolidatedThead"></thead>
+              <tbody id="consolidatedTbody"></tbody>
+            </table>
           </div>
         </div>
 
         <div class="card">
           <div class="card-header">
             <div>
-              <h2 class="card-title">Crear Cuenta de Docente</h2>
-              <p class="card-subtitle">Asigna turno, sección guía y asignaturas para cada maestro.</p>
+              <div class="card-title">Consolidado General por Turno (Matutino y Vespertino · 7mo a 11mo · Secciones A–H)</div>
+              <div class="card-subtitle">Comparativo de matrícula, evaluados, aprobados, reprobados, % de aprobación y promedio general por grado y sección en cada turno.</div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button class="btn btn-primary btn-sm" onclick="exportShiftSummaryExcel('Matutino')">Excel Turno Matutino (.xls)</button>
+              <button class="btn btn-accent btn-sm" onclick="exportShiftSummaryExcel('Vespertino')">Excel Turno Vespertino (.xls)</button>
+              <button class="btn btn-light btn-sm" onclick="exportBothShiftsExcel()">Excel Ambos Turnos (.xls)</button>
             </div>
           </div>
-          <form onsubmit="addTeacherForm(event)">
-            <div class="grid-3">
-              <div class="form-group">
-                <label class="form-label">Nombre Completo</label>
-                <input type="text" name="name" class="form-control" required placeholder="Ej. Prof. Marta Ruiz" />
+
+          <div class="grid-2" style="gap:16px;">
+            <div>
+              <div style="font-weight:700; color:var(--primary-dark); margin-bottom:8px;">Turno Matutino</div>
+              <div class="table-wrap" style="max-height:480px; overflow-y:auto;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Grado / Sec.</th>
+                      <th>Matrícula</th>
+                      <th>Aprob.</th>
+                      <th>Reprob.</th>
+                      <th>% Aprob.</th>
+                      <th>Prom.</th>
+                    </tr>
+                  </thead>
+                  <tbody id="shiftMorningTbody"></tbody>
+                </table>
               </div>
-              <div class="form-group">
-                <label class="form-label">Usuario</label>
-                <input type="text" name="username" class="form-control" required placeholder="Ej. mruiz" />
+            </div>
+
+            <div>
+              <div style="font-weight:700; color:#9a3412; margin-bottom:8px;">Turno Vespertino</div>
+              <div class="table-wrap" style="max-height:480px; overflow-y:auto;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Grado / Sec.</th>
+                      <th>Matrícula</th>
+                      <th>Aprob.</th>
+                      <th>Reprob.</th>
+                      <th>% Aprob.</th>
+                      <th>Prom.</th>
+                    </tr>
+                  </thead>
+                  <tbody id="shiftEveningTbody"></tbody>
+                </table>
               </div>
-              <div class="form-group">
-                <label class="form-label">Contraseña</label>
-                <input type="text" name="password" class="form-control" value="123" required />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: DOCENTES Y TURNOS (DIRECCIÓN) -->
+      <div id="teachersTab" class="tab-panel hidden">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Identidad Institucional y Logo</div>
+              <div class="card-subtitle">Administra el logo del Instituto Nacional Gaspar García Laviana.</div>
+            </div>
+          </div>
+
+          <div class="logo-upload-bar">
+            <div class="logo-preview-lg" id="dirLogoPreview">
+              <span class="logo-fallback" style="color:#14532d;">INGGL</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Logo Oficial del Centro</div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                <label class="btn btn-primary btn-sm" style="cursor:pointer; margin:0;">
+                  Subir / Cambiar Logo
+                  <input type="file" id="logoInputDir" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)" />
+                </label>
+                <button type="button" class="btn btn-light btn-sm" onclick="clearLogo()">Quitar Logo</button>
               </div>
-              <div class="form-group">
-                <label class="form-label">Turno</label>
-                <select name="turno" class="form-control">
-                  <option value="Matutino">Matutino</option>
-                  <option value="Vespertino">Vespertino</option>
-                  <option value="Todos">Ambos Turnos</option>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Cuentas de Docentes y Asignación de Asignaturas</div>
+              <div class="card-subtitle">Selecciona exactamente las asignaturas que imparte cada docente (cuantitativas y/o cualitativas), su turno y su grado guía.</div>
+            </div>
+          </div>
+
+          <form onsubmit="addTeacher(event)">
+            <div class="grid-3" style="margin-bottom:10px;">
+              <div class="field" style="margin:0;">
+                <label for="tchName">Nombre del Docente</label>
+                <input type="text" id="tchName" placeholder="Ej. Prof. María López" required />
+              </div>
+              <div class="field" style="margin:0;">
+                <label for="tchUser">Usuario de acceso</label>
+                <input type="text" id="tchUser" placeholder="Ej. mlopez" required />
+              </div>
+              <div class="field" style="margin:0;">
+                <label for="tchPass">Contraseña</label>
+                <input type="text" id="tchPass" placeholder="Clave inicial" required />
+              </div>
+              <div class="field" style="margin:0;">
+                <label for="tchShift">Turno Asignado</label>
+                <select id="tchShift">
+                  <option value="Matutino">Turno Matutino</option>
+                  <option value="Vespertino">Turno Vespertino</option>
+                  <option value="Ambos">Ambos Turnos</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label class="form-label">Sección Guía (opcional)</label>
-                <select name="guideSection" class="form-control">
+              <div class="field" style="margin:0;">
+                <label for="tchGuideGrade">Grado Guía</label>
+                <select id="tchGuideGrade">
+                  <option value="">Ninguno</option>
+                  <option value="7mo">7mo Grado</option>
+                  <option value="8vo">8vo Grado</option>
+                  <option value="9no">9no Grado</option>
+                  <option value="10mo">10mo Grado</option>
+                  <option value="11mo">11mo Grado</option>
+                </select>
+              </div>
+              <div class="field" style="margin:0;">
+                <label for="tchGuideSection">Sección Guía</label>
+                <select id="tchGuideSection">
                   <option value="">Ninguna</option>
-                  ${allSections.map((sec) => `<option value="${escapeHtml(sec)}">${escapeHtml(sec)} (${getSectionTurno(sec)})</option>`).join('')}
+                  <option value="A">Sección A</option>
+                  <option value="B">Sección B</option>
+                  <option value="C">Sección C</option>
+                  <option value="D">Sección D</option>
+                  <option value="E">Sección E</option>
+                  <option value="F">Sección F</option>
+                  <option value="G">Sección G</option>
+                  <option value="H">Sección H</option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group" style="margin-top:10px;">
-              <label class="form-label">Asignaturas Permitidas</label>
-              <div style="display:flex;flex-wrap:wrap;gap:10px;padding:10px;border:1px solid var(--border-light);border-radius:var(--radius-sm);background:var(--bg-subtle);">
-                ${allSubjectChoices.map((ch) => `
-                  <label style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;cursor:pointer;">
-                    <input type="checkbox" name="subjects" value="${escapeHtml(ch.id)}" ${ch.id === 'lengua' ? 'checked' : ''} />
-                    ${escapeHtml(ch.label)}
-                  </label>
-                `).join('')}
+            <div class="field">
+              <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;">
+                <label>Asignaturas Asignadas al Docente (marca una o varias)</label>
+                <div style="display:flex; gap:6px;">
+                  <button type="button" class="btn btn-light btn-sm" onclick="toggleAllTeacherSubjects(true)">Seleccionar todas</button>
+                  <button type="button" class="btn btn-light btn-sm" onclick="toggleAllTeacherSubjects(false)">Limpiar selección</button>
+                </div>
+              </div>
+              <div class="subject-selector-box">
+                <div style="font-size:11px; color:var(--muted);">
+                  Solo las asignaturas marcadas estarán habilitadas para que este docente digite calificaciones.
+                </div>
+                <div class="subject-grid" id="teacherSubjectsCheckboxes"></div>
               </div>
             </div>
 
-            <div style="margin-top:12px;display:flex;justify-content:flex-end;">
-              <button type="submit" class="btn btn-primary">Registrar Docente</button>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
+              <button type="submit" class="btn btn-primary">+ Guardar Docente y Asignaciones</button>
+              <button type="button" id="btnCancelEditTeacher" class="btn btn-light hidden" onclick="cancelEditTeacher()">Cancelar edición</button>
             </div>
           </form>
-        </div>
 
-        <div class="card">
-          <div class="card-header">
-            <div>
-              <h3 class="card-title">Usuarios Registrados</h3>
-            </div>
-          </div>
           <div class="table-wrap">
-            <table class="data-table">
+            <table>
               <thead>
                 <tr>
-                  <th class="left">Nombre</th>
+                  <th>Docente</th>
                   <th>Usuario</th>
-                  <th>Rol</th>
                   <th>Turno</th>
-                  <th>Sección Guía</th>
-                  <th>Asignaturas</th>
-                  <th>Acción</th>
+                  <th>Grado / Sec. Guía</th>
+                  <th>Asignaturas Asignadas</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
-                ${db.users.map((u) => `
-                  <tr>
-                    <td class="left" style="font-weight:700;">${escapeHtml(u.name)}</td>
-                    <td><code>${escapeHtml(u.username)}</code></td>
-                    <td>${u.role === 'admin' ? '<span class="badge badge-navy">Dirección</span>' : '<span class="badge badge-green">Docente</span>'}</td>
-                    <td>${escapeHtml(u.turno || 'Todos')}</td>
-                    <td>${u.guideSection ? escapeHtml(u.guideSection) : '—'}</td>
-                    <td>${escapeHtml((u.assignedSubjects || []).join(', '))}</td>
-                    <td>
-                      ${u.role === 'admin'
-                        ? '—'
-                        : `<button type="button" class="btn btn-danger btn-sm" onclick="removeTeacher('${u.id}')">Eliminar</button>`}
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
+              <tbody id="teachersTbody"></tbody>
             </table>
           </div>
         </div>
+      </div>
 
+      <!-- TAB 6: SINCRONIZACIÓN ONLINE (DIRECCIÓN) -->
+      <div id="syncTab" class="tab-panel hidden">
         <div class="card">
           <div class="card-header">
             <div>
-              <h3 class="card-title">Sincronización ONLINE en Tiempo Real</h3>
-              <p class="card-subtitle">Conecta tu URL de API REST / Webhook o Firebase para sincronizar cambios en línea.</p>
-            </div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="pullLatestFromCloud(true)">Descargar Nube</button>
-              <button type="button" class="btn btn-success btn-sm" onclick="flushSyncQueue(true)">Sincronizar Ahora</button>
+              <div class="card-title">Configuración de Sincronización en Línea</div>
+              <div class="card-subtitle">Conecta una URL de Google Apps Script (Web App) o API REST compatible para guardar y cargar datos de Matutino y Vespertino en línea.</div>
             </div>
           </div>
-          <form onsubmit="saveOnlineConfigForm(event)">
-            <div class="grid-3">
-              <div class="form-group">
-                <label class="form-label">Modo Online</label>
-                <select name="mode" class="form-control">
-                  <option value="rest" ${db.onlineConfig.mode === 'rest' ? 'selected' : ''}>API REST / Webhook JSON (PUT)</option>
-                  <option value="firebase_rtdb" ${db.onlineConfig.mode === 'firebase_rtdb' ? 'selected' : ''}>Firebase Realtime Database</option>
-                  <option value="firestore" ${db.onlineConfig.mode === 'firestore' ? 'selected' : ''}>Google Firestore REST</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">URL Base / Endpoint Online</label>
-                <input type="url" name="endpointUrl" class="form-control" value="${escapeHtml(db.onlineConfig.endpointUrl)}" placeholder="https://..." />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Ruta / Documento</label>
-                <input type="text" name="documentPath" class="form-control" value="${escapeHtml(db.onlineConfig.documentPath)}" placeholder="inggl/2026/database" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Token / Clave (opcional)</label>
-                <input type="password" name="authToken" class="form-control" value="${escapeHtml(db.onlineConfig.authToken)}" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">API Key (opcional)</label>
-                <input type="text" name="apiKey" class="form-control" value="${escapeHtml(db.onlineConfig.apiKey)}" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Intervalo Consulta (seg.)</label>
-                <input type="number" min="5" max="120" name="autoPullSeconds" class="form-control" value="${escapeHtml(db.onlineConfig.autoPullSeconds)}" />
-              </div>
-            </div>
-            <div style="margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;">
-              <label style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;cursor:pointer;">
-                <input type="checkbox" name="enabled" ${db.onlineConfig.enabled ? 'checked' : ''} />
-                Sincronización ONLINE automática al guardar y al conectar
-              </label>
-              <button type="submit" class="btn btn-primary">Guardar Configuración Online</button>
-            </div>
-          </form>
-        </div>
 
-        ${renderLogoManagerCard()}
-      `;
+          <div class="field">
+            <label for="syncEndpointInput">URL de Aplicación Web / Endpoint Online (HTTPS)</label>
+            <input type="url" id="syncEndpointInput" placeholder="https://script.google.com/macros/s/.../exec" />
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+            <button class="btn btn-primary btn-sm" onclick="saveSyncConfig()">Guardar URL Online</button>
+            <button class="btn btn-accent btn-sm" onclick="pullFromCloud()">Descargar desde Nube</button>
+            <button class="btn btn-light btn-sm" onclick="pushToCloud()">Subir Todo a Nube</button>
+          </div>
+
+          <div class="card-subtitle" style="font-weight:700; margin-bottom:6px;">Bitácora de Actividad y Sincronización</div>
+          <div class="log-list" id="activityLog"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "INGGL_SISTEMA_NOTAS_TURNOS_V2";
+    const GRADES_LIST = ["7mo", "8vo", "9no", "10mo", "11mo"];
+    const SECTIONS_LIST = ["A", "B", "C", "D", "E", "F", "G", "H"];
+    const SHIFTS_LIST = ["Matutino", "Vespertino"];
+
+    const DEFAULT_CURRICULUM = {
+      "7mo": [
+        { id: "lengua7", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat7", name: "Matemática", type: "CUAN" },
+        { id: "ing7", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "ccnn7", name: "Ciencias Naturales", type: "CUAN" },
+        { id: "est7", name: "Estudios Sociales", type: "CUAN" },
+        { id: "tac7", name: "TAC", type: "CUAL" },
+        { id: "aep7", name: "AEP", type: "CUAL" },
+        { id: "crec7", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "ddm7", name: "Derechos y Dignidad de las Mujeres", type: "CUAL" },
+        { id: "edfis7", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "8vo": [
+        { id: "lengua8", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat8", name: "Matemática", type: "CUAN" },
+        { id: "ing8", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "ccnn8", name: "Ciencias Naturales", type: "CUAN" },
+        { id: "est8", name: "Estudios Sociales", type: "CUAN" },
+        { id: "tac8", name: "TAC", type: "CUAL" },
+        { id: "aep8", name: "AEP", type: "CUAL" },
+        { id: "crec8", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "ddm8", name: "Derechos y Dignidad de las Mujeres", type: "CUAL" },
+        { id: "edfis8", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "9no": [
+        { id: "lengua9", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat9", name: "Matemática", type: "CUAN" },
+        { id: "ing9", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "ccnn9", name: "Ciencias Naturales", type: "CUAN" },
+        { id: "est9", name: "Estudios Sociales", type: "CUAN" },
+        { id: "tac9", name: "TAC", type: "CUAL" },
+        { id: "aep9", name: "AEP", type: "CUAL" },
+        { id: "crec9", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "ddm9", name: "Derechos y Dignidad de las Mujeres", type: "CUAL" },
+        { id: "edfis9", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "10mo": [
+        { id: "lengua10", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat10", name: "Matemática", type: "CUAN" },
+        { id: "ing10", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "fis10", name: "Física", type: "CUAN" },
+        { id: "quim10", name: "Química", type: "CUAN" },
+        { id: "bio10", name: "Biología", type: "CUAN" },
+        { id: "hist10", name: "Historia y Geografía", type: "CUAN" },
+        { id: "filo10", name: "Filosofía", type: "CUAN" },
+        { id: "aep10", name: "AEP", type: "CUAL" },
+        { id: "crec10", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "ddm10", name: "Derechos y Dignidad de las Mujeres", type: "CUAL" },
+        { id: "edfis10", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "11mo": [
+        { id: "lengua11", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat11", name: "Matemática", type: "CUAN" },
+        { id: "ing11", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "fis11", name: "Física", type: "CUAN" },
+        { id: "quim11", name: "Química", type: "CUAN" },
+        { id: "bio11", name: "Biología", type: "CUAN" },
+        { id: "soci11", name: "Sociología", type: "CUAN" },
+        { id: "econ11", name: "Economía", type: "CUAN" },
+        { id: "aep11", name: "AEP", type: "CUAL" },
+        { id: "crec11", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "ddm11", name: "Derechos y Dignidad de las Mujeres", type: "CUAL" },
+        { id: "edfis11", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ]
+    };
+
+    const QUALITATIVE_KEYWORDS = [
+      "crecimiento en valores",
+      "creación en valores",
+      "derechos y dignidad de las mujeres",
+      "educación de la mujer",
+      "educacion de la mujer",
+      "educación física",
+      "educacion fisica",
+      "práctica deportiva",
+      "tac",
+      "aep"
+    ];
+
+    function normalizeSubjectType(subject) {
+      if (!subject) return "CUAN";
+      const rawType = (subject.type || "").toUpperCase().trim();
+      const lowerName = (subject.name || "").toLowerCase().trim();
+      if (rawType === "CUAL" || QUALITATIVE_KEYWORDS.some(k => lowerName.includes(k))) {
+        return "CUAL";
+      }
+      return "CUAN";
     }
 
-    function render() {
-      const app = document.getElementById('app');
-      if (!app) return;
+    function ensureCurriculumConsistency(curr) {
+      const target = curr || JSON.parse(JSON.stringify(DEFAULT_CURRICULUM));
+      GRADES_LIST.forEach(grade => {
+        if (!Array.isArray(target[grade]) || !target[grade].length) {
+          target[grade] = JSON.parse(JSON.stringify(DEFAULT_CURRICULUM[grade]));
+        } else {
+          target[grade] = target[grade].map(s => ({
+            ...s,
+            type: normalizeSubjectType(s)
+          }));
+          const hasMujer = target[grade].some(s =>
+            s.name.toLowerCase().includes("mujer")
+          );
+          const num = grade.replace(/\D/g, "");
+          const hasTac = target[grade].some(s => s.name.trim().toLowerCase() === "tac");
+          if (!hasTac && ["7mo", "8vo", "9no"].includes(grade)) {
+            target[grade].push({ id: "tac" + num, name: "TAC", type: "CUAL" });
+          }
+          const hasAep = target[grade].some(s => s.name.trim().toLowerCase() === "aep");
+          if (!hasAep) {
+            target[grade].push({ id: "aep" + num, name: "AEP", type: "CUAL" });
+          }
+          if (!hasMujer) {
+            const idxFis = target[grade].findIndex(s => s.name.toLowerCase().includes("física") || s.name.toLowerCase().includes("fisica"));
+            const itemMujer = {
+              id: "ddm" + num,
+              name: "Derechos y Dignidad de las Mujeres",
+              type: "CUAL"
+            };
+            if (idxFis >= 0) target[grade].splice(idxFis, 0, itemMujer);
+            else target[grade].push(itemMujer);
+          }
+        }
+      });
+      return target;
+    }
 
-      if (!state.currentUser) {
-        app.innerHTML = renderLoginView();
+    function getAllUniqueSubjects() {
+      const map = new Map();
+      GRADES_LIST.forEach(g => {
+        (state.curriculum[g] || []).forEach(sub => {
+          const type = normalizeSubjectType(sub);
+          if (!map.has(sub.name)) {
+            map.set(sub.name, { name: sub.name, type });
+          }
+        });
+      });
+      return Array.from(map.values());
+    }
+
+    function createBlankState() {
+      return {
+        schoolName: "Instituto Nacional Gaspar García Laviana",
+        municipality: "Tola, Rivas, Nicaragua",
+        logoBase64: "",
+        syncEndpoint: "",
+        updatedAt: new Date().toISOString(),
+        users: [
+          {
+            id: "dir-1",
+            name: "Dirección General",
+            username: "direccion",
+            passwordHash: "inggl2026",
+            role: "DIRECTOR",
+            shift: "Ambos",
+            guideGrade: "",
+            guideSection: "",
+            subjects: ["TODAS"]
+          }
+        ],
+        curriculum: ensureCurriculumConsistency(JSON.parse(JSON.stringify(DEFAULT_CURRICULUM))),
+        students: [],
+        grades: {},
+        logs: []
+      };
+    }
+
+    let state = loadLocalState();
+    let currentUser = null;
+    let syncQueue = [];
+    let editingTeacherId = null;
+
+    function loadLocalState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("INGGL_SISTEMA_NOTAS_TURNOS_V1");
+        if (!raw) return createBlankState();
+        const parsed = JSON.parse(raw);
+        const merged = Object.assign(createBlankState(), parsed);
+        merged.curriculum = ensureCurriculumConsistency(merged.curriculum);
+        return merged;
+      } catch (e) {
+        return createBlankState();
+      }
+    }
+
+    function saveLocalState() {
+      state.updatedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateLastSaveBadge();
+    }
+
+    function addLog(message) {
+      const time = new Date().toLocaleTimeString("es-NI", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      state.logs.unshift(`[${time}] ${message}`);
+      if (state.logs.length > 80) state.logs.length = 80;
+      renderLogs();
+    }
+
+    function updateLastSaveBadge() {
+      const el = document.getElementById("lastSaveBadge");
+      if (!el) return;
+      const d = new Date(state.updatedAt || Date.now());
+      el.textContent = "Guardado " + d.toLocaleTimeString("es-NI", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function updateConnectivityUI() {
+      const badge = document.getElementById("onlineBadge");
+      const syncBadge = document.getElementById("syncBadge");
+      const isOnline = navigator.onLine;
+      if (isOnline) {
+        badge.textContent = "● En línea";
+        badge.className = "badge online";
+      } else {
+        badge.textContent = "● Sin internet";
+        badge.className = "badge offline-warn";
+      }
+
+      if (state.syncEndpoint && state.syncEndpoint.trim()) {
+        syncBadge.textContent = "Nube conectada";
+        syncBadge.className = "badge online";
+      } else {
+        syncBadge.textContent = "Sin URL en línea";
+        syncBadge.className = "badge";
+      }
+    }
+
+    window.addEventListener("online", () => {
+      updateConnectivityUI();
+      addLog("Conexión a internet restaurada.");
+      if (state.syncEndpoint && (syncQueue.length > 0 || currentUser)) {
+        pushToCloud(true);
+      }
+    });
+
+    window.addEventListener("offline", () => {
+      updateConnectivityUI();
+      addLog("Sin conexión a internet. Cambios en cola para sincronizar.");
+    });
+
+    function renderLogos() {
+      const topBox = document.getElementById("topLogoBox");
+      const loginBox = document.getElementById("loginLogoPreview");
+      const dirBox = document.getElementById("dirLogoPreview");
+
+      const content = state.logoBase64
+        ? `<img src="${state.logoBase64}" alt="Logo Institucional" />`
+        : `<span class="logo-fallback" style="color:#14532d;">INGGL</span>`;
+
+      if (topBox) {
+        topBox.innerHTML = state.logoBase64
+          ? `<img src="${state.logoBase64}" alt="Logo" />`
+          : `<span class="logo-fallback">INGGL</span>`;
+      }
+      if (loginBox) loginBox.innerHTML = content;
+      if (dirBox) dirBox.innerHTML = content;
+    }
+
+    function handleLogoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        state.logoBase64 = e.target.result;
+        saveLocalState();
+        renderLogos();
+        addLog("Logo institucional actualizado.");
+        if (state.syncEndpoint) pushToCloud(true);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearLogo() {
+      state.logoBase64 = "";
+      saveLocalState();
+      renderLogos();
+      addLog("Logo institucional restablecido.");
+      if (state.syncEndpoint) pushToCloud(true);
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const userVal = document.getElementById("loginUser").value.trim().toLowerCase();
+      const passVal = document.getElementById("loginPass").value;
+      const errBox = document.getElementById("loginError");
+
+      const found = state.users.find(
+        u => u.username.toLowerCase() === userVal && u.passwordHash === passVal
+      );
+
+      if (!found) {
+        errBox.textContent = "Usuario o contraseña incorrectos.";
+        errBox.classList.remove("hidden");
         return;
       }
 
-      const tabs = [
-        { id: 'registro', label: 'Registro de Notas' },
-        { id: 'consolidado', label: 'Consolidados y Turnos' },
-        { id: 'rendimientos', label: 'Rendimiento de Guía' }
-      ];
-      if (isAdmin()) {
-        tabs.push({ id: 'docentes', label: 'Docentes, Turnos y Nube' });
+      errBox.classList.add("hidden");
+      currentUser = found;
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("appSection").classList.remove("hidden");
+      document.getElementById("btnLogout").classList.remove("hidden");
+      document.getElementById("btnSyncNow").classList.remove("hidden");
+
+      document.getElementById("sessionUserLabel").textContent = `${currentUser.name} (${currentUser.username})`;
+      const rolePill = document.getElementById("sessionRolePill");
+      rolePill.textContent = currentUser.role === "DIRECTOR" ? "DIRECCIÓN" : "DOCENTE";
+
+      const isDir = currentUser.role === "DIRECTOR";
+      document.querySelectorAll(".dir-only").forEach(el => {
+        el.classList.toggle("hidden", !isDir);
+      });
+
+      if (!isDir) {
+        if (currentUser.shift && currentUser.shift !== "Ambos") {
+          document.getElementById("activeShiftSelect").value = currentUser.shift;
+        }
+        if (currentUser.guideGrade) {
+          document.getElementById("activeGradeSelect").value = currentUser.guideGrade;
+        }
+        if (currentUser.guideSection) {
+          document.getElementById("activeSectionSelect").value = currentUser.guideSection;
+        }
       }
 
-      let bodyHtml = '';
-      if (state.activeTab === 'consolidado') {
-        bodyHtml = renderConsolidadoTab();
-      } else if (state.activeTab === 'rendimientos') {
-        bodyHtml = renderRendimientosTab();
-      } else if (state.activeTab === 'docentes' && isAdmin()) {
-        bodyHtml = renderDocentesTab();
+      document.getElementById("syncEndpointInput").value = state.syncEndpoint || "";
+      addLog(`Inicio de sesión: ${currentUser.name}`);
+
+      if (state.syncEndpoint && navigator.onLine) {
+        pullFromCloud(true);
       } else {
-        state.activeTab = 'registro';
-        bodyHtml = renderRegistroTab();
+        renderAll();
       }
-
-      const recentLogs = (db.auditLog || []).slice(0, 6);
-
-      app.innerHTML = `
-        <header class="topbar">
-          <div class="topbar-inner">
-            <div class="brand-group">
-              ${renderSchoolLogo(46)}
-              <div>
-                <h1 class="brand-title">${escapeHtml(db.schoolName)}</h1>
-                <p class="brand-sub">${escapeHtml(db.schoolLocation)} • ${escapeHtml(db.motto)}</p>
-              </div>
-            </div>
-            <div class="topbar-actions">
-              <span class="user-pill">
-                <span id="syncDotIndicator" class="sync-dot"></span>
-                <span id="syncStatusLabel">${escapeHtml(state.syncDetail)}</span>
-              </span>
-              <span class="user-pill" id="syncQueueBadge">
-                Cola: ${(db.pendingSyncQueue || []).length}
-              </span>
-              <span class="user-pill">
-                Guardado (${escapeHtml(state.lastSavedAt)})
-              </span>
-              <button type="button" class="btn btn-success btn-sm" onclick="saveDatabase('Guardado manual ejecutado', true)">
-                Guardar
-              </button>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="exportDatabaseJson()">
-                Respaldar JSON
-              </button>
-              <label class="btn btn-secondary btn-sm" style="margin:0;cursor:pointer;">
-                Restaurar JSON
-                <input type="file" accept=".json,application/json" style="display:none;" onchange="importDatabaseJson(this)" />
-              </label>
-              <span class="user-pill">
-                ${escapeHtml(state.currentUser.name)} (${isAdmin() ? 'Dirección' : 'Docente'})
-              </span>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="logoutUser()">Cerrar Sesión</button>
-            </div>
-          </div>
-        </header>
-
-        <main class="main-container">
-          <nav class="tabs-bar" aria-label="Secciones del sistema">
-            ${tabs.map((t) => `
-              <button
-                type="button"
-                class="tab-btn ${state.activeTab === t.id ? 'active' : ''}"
-                onclick="state.activeTab = '${t.id}'; render();"
-              >
-                ${escapeHtml(t.label)}
-              </button>
-            `).join('')}
-          </nav>
-
-          ${bodyHtml}
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-header" style="margin-bottom:8px;padding-bottom:8px;">
-              <div>
-                <h3 class="card-title" style="font-size:14px;">Bitácora de Actividad</h3>
-                <p class="card-subtitle">Registro de cambios y sincronización en el sistema.</p>
-              </div>
-              <span class="badge badge-green">Autoguardado Activo</span>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--text-muted);">
-              ${recentLogs.map((item) => `
-                <div><strong>[${escapeHtml(item.time)}]</strong> <span>${escapeHtml(item.actor)}:</span> ${escapeHtml(item.action)}</div>
-              `).join('')}
-            </div>
-          </div>
-        </main>
-      `;
-      updateSyncStatusUI();
     }
 
-    window.addEventListener('online', () => {
-      state.syncStatus = 'online';
-      state.syncDetail = 'ONLINE · Conexión restaurada';
-      updateSyncStatusUI();
-      flushSyncQueue(true);
-    });
+    function logout() {
+      currentUser = null;
+      document.getElementById("appSection").classList.add("hidden");
+      document.getElementById("loginSection").classList.remove("hidden");
+      document.getElementById("btnLogout").classList.add("hidden");
+      document.getElementById("btnSyncNow").classList.add("hidden");
+      document.getElementById("loginPass").value = "";
+    }
 
-    window.addEventListener('offline', () => {
-      state.syncStatus = 'offline';
-      state.syncDetail = 'Sin señal · En cola de reintento';
-      updateSyncStatusUI();
-    });
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.add("hidden"));
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById(tabId).classList.remove("hidden");
+      const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+      if (btn) btn.classList.add("active");
+      renderAll();
+    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      render();
-      setupAutoPullInterval();
-      if (navigator.onLine && db.onlineConfig && db.onlineConfig.enabled && db.onlineConfig.endpointUrl) {
-        flushSyncQueue(false);
+    function getActiveContext() {
+      return {
+        shift: document.getElementById("activeShiftSelect").value,
+        grade: document.getElementById("activeGradeSelect").value,
+        section: document.getElementById("activeSectionSelect").value,
+        period: document.getElementById("activePeriodSelect").value
+      };
+    }
+
+    function updateShiftBanner() {
+      const { shift, grade, section, period } = getActiveContext();
+      const pill = document.getElementById("activeShiftBannerPill");
+      pill.textContent = "Turno " + shift;
+      pill.className = "pill " + (shift === "Matutino" ? "pill-shift-m" : "pill-shift-v");
+
+      const ctxText = `Turno ${shift} · ${grade} "${section}" · ${period}`;
+      document.getElementById("gradesCardTitle").textContent = `Registro de Calificaciones — ${ctxText}`;
+      document.getElementById("studentsCardTitle").textContent = `Gestión de Estudiantes — Turno ${shift} · ${grade} "${section}"`;
+      document.getElementById("guideCardTitle").textContent = `Rendimiento de Aula Guía — ${ctxText}`;
+      document.getElementById("consolidatedSubtitle").textContent = `Sábana consolidada para ${ctxText}.`;
+    }
+
+    function onFilterChange() {
+      renderAll();
+    }
+
+    function canEditSubject(subjectName) {
+      if (!currentUser) return false;
+      if (currentUser.role === "DIRECTOR") return true;
+      const { shift } = getActiveContext();
+      if (currentUser.shift && currentUser.shift !== "Ambos" && currentUser.shift !== shift) {
+        return false;
       }
-    });
+      const list = currentUser.subjects || [];
+      if (list.includes("TODAS")) return true;
+      return list.map(s => s.trim().toLowerCase()).includes(subjectName.trim().toLowerCase());
+    }
+
+    function getFilteredStudents(shift, grade, section) {
+      return state.students.filter(s => (s.shift || "Matutino") === shift && s.grade === grade && s.section === section);
+    }
+
+    function getGradeKey(shift, grade, section, period, studentId, subjectId) {
+      return `${shift}__${grade}__${section}__${period}__${studentId}__${subjectId}`;
+    }
+
+    function scoreToQual(score) {
+      if (score === "" || score === null || score === undefined || isNaN(Number(score))) return "";
+      const n = Number(score);
+      if (n >= 90) return "AA";
+      if (n >= 76) return "AS";
+      if (n >= 60) return "AF";
+      return "AI";
+    }
+
+    function onGradeInputChange(key, value, type) {
+      if (type === "CUAN") {
+        if (value === "") {
+          delete state.grades[key];
+        } else {
+          let num = Number(value);
+          if (num < 0) num = 0;
+          if (num > 100) num = 100;
+          state.grades[key] = num;
+        }
+      } else {
+        const clean = String(value || "").toUpperCase().trim();
+        if (!["AA", "AS", "AF", "AI"].includes(clean)) {
+          delete state.grades[key];
+        } else {
+          state.grades[key] = clean;
+        }
+      }
+      saveLocalState();
+      queueCloudSync();
+      renderGradesTable();
+      renderGuideView();
+      renderConsolidatedView();
+      renderShiftSummaries();
+    }
+
+    function persistAndSync(reason) {
+      saveLocalState();
+      addLog(reason || "Datos guardados.");
+      if (state.syncEndpoint) {
+        pushToCloud();
+      }
+    }
+
+    let syncDebounceTimer = null;
+    function queueCloudSync() {
+      if (!state.syncEndpoint) return;
+      syncQueue.push(Date.now());
+      clearTimeout(syncDebounceTimer);
+      syncDebounceTimer = setTimeout(() => {
+        pushToCloud(true);
+      }, 900);
+    }
+
+    async function saveSyncConfig() {
+      const url = document.getElementById("syncEndpointInput").value.trim();
+      state.syncEndpoint = url;
+      saveLocalState();
+      updateConnectivityUI();
+      addLog(url ? "URL de sincronización en línea guardada." : "URL de sincronización removida.");
+      if (url && navigator.onLine) {
+        await pushToCloud();
+      }
+    }
+
+    async function pushToCloud(silent = false) {
+      if (!state.syncEndpoint) {
+        if (!silent) alert("Configura primero la URL de sincronización en la pestaña Sincronización Online.");
+        return;
+      }
+      if (!navigator.onLine) {
+        addLog("Sin conexión: guardado local listo para sincronizar al volver el internet.");
+        return;
+      }
+
+      const badge = document.getElementById("syncBadge");
+      badge.textContent = "Sincronizando...";
+      badge.className = "badge syncing";
+
+      try {
+        const res = await fetch(state.syncEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "saveState", data: state })
+        });
+        const json = await res.json();
+        if (json && json.ok !== false) {
+          syncQueue = [];
+          badge.textContent = "Sincronizado";
+          badge.className = "badge online";
+          addLog("Datos sincronizados en línea correctamente.");
+        } else {
+          throw new Error(json.error || "Respuesta inválida del servidor");
+        }
+      } catch (err) {
+        badge.textContent = "Error sync";
+        badge.className = "badge offline-warn";
+        addLog("Error al sincronizar en línea: " + err.message);
+      }
+    }
+
+    async function pullFromCloud(silent = false) {
+      if (!state.syncEndpoint) {
+        if (!silent) alert("Configura primero la URL de sincronización en línea.");
+        return;
+      }
+      if (!navigator.onLine) {
+        if (!silent) alert("No hay conexión a internet.");
+        return;
+      }
+
+      const badge = document.getElementById("syncBadge");
+      badge.textContent = "Descargando...";
+      badge.className = "badge syncing";
+
+      try {
+        const res = await fetch(state.syncEndpoint, { method: "GET" });
+        const json = await res.json();
+        const remoteData = json && json.data ? json.data : null;
+        if (remoteData && typeof remoteData === "object") {
+          const keepEndpoint = state.syncEndpoint;
+          state = Object.assign(createBlankState(), remoteData);
+          state.curriculum = ensureCurriculumConsistency(state.curriculum);
+          if (!state.syncEndpoint && keepEndpoint) state.syncEndpoint = keepEndpoint;
+          saveLocalState();
+          renderLogos();
+          renderAll();
+          badge.textContent = "Nube conectada";
+          badge.className = "badge online";
+          addLog("Datos actualizados desde la nube.");
+        } else {
+          badge.textContent = "Nube conectada";
+          badge.className = "badge online";
+          if (!silent) addLog("La nube está vacía; puedes subir tus datos actuales.");
+        }
+      } catch (err) {
+        badge.textContent = "Error sync";
+        badge.className = "badge offline-warn";
+        addLog("Error al leer desde la nube: " + err.message);
+      }
+    }
+
+    function manualSync() {
+      if (state.syncEndpoint) {
+        pushToCloud();
+      } else {
+        saveLocalState();
+        addLog("Guardado local verificado.");
+      }
+    }
+
+    function addStudent(event) {
+      event.preventDefault();
+      const { shift, grade, section } = getActiveContext();
+      const code = document.getElementById("stuCode").value.trim() || `EST-${Date.now().toString().slice(-4)}`;
+      const name = document.getElementById("stuName").value.trim();
+      const sex = document.getElementById("stuSex").value;
+
+      if (!name) return;
+
+      state.students.push({
+        id: "stu-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+        code,
+        name,
+        sex,
+        shift,
+        grade,
+        section
+      });
+
+      document.getElementById("stuCode").value = "";
+      document.getElementById("stuName").value = "";
+      saveLocalState();
+      queueCloudSync();
+      addLog(`Estudiante agregado: ${name} (${shift} · ${grade} ${section})`);
+      renderAll();
+    }
+
+    function deleteStudent(studentId) {
+      if (!confirm("¿Eliminar este estudiante y sus notas registradas?")) return;
+      state.students = state.students.filter(s => s.id !== studentId);
+      Object.keys(state.grades).forEach(k => {
+        if (k.includes(`__${studentId}__`)) delete state.grades[k];
+      });
+      saveLocalState();
+      queueCloudSync();
+      addLog("Estudiante eliminado.");
+      renderAll();
+    }
+
+    function renderTeacherSubjectCheckboxes(selectedSubjects = []) {
+      const container = document.getElementById("teacherSubjectsCheckboxes");
+      if (!container) return;
+      const allSubs = getAllUniqueSubjects();
+      const selectAll = selectedSubjects.includes("TODAS");
+      const lowerSelected = selectedSubjects.map(s => s.toLowerCase().trim());
+
+      container.innerHTML = allSubs.map(sub => {
+        const checked = selectAll || lowerSelected.includes(sub.name.toLowerCase().trim());
+        const pill = sub.type === "CUAL"
+          ? `<span class="pill pill-qual">CUAL</span>`
+          : `<span class="pill pill-cuan">CUAN</span>`;
+        return `
+          <label class="subject-check">
+            <input type="checkbox" name="tchSubChk" value="${sub.name}" ${checked ? "checked" : ""} />
+            <span style="flex:1;">${sub.name}</span>
+            ${pill}
+          </label>
+        `;
+      }).join("");
+    }
+
+    function toggleAllTeacherSubjects(checked) {
+      document.querySelectorAll('input[name="tchSubChk"]').forEach(chk => {
+        chk.checked = checked;
+      });
+    }
+
+    function addTeacher(event) {
+      event.preventDefault();
+      if (!currentUser || currentUser.role !== "DIRECTOR") return;
+      const name = document.getElementById("tchName").value.trim();
+      const username = document.getElementById("tchUser").value.trim();
+      const passwordHash = document.getElementById("tchPass").value;
+      const shift = document.getElementById("tchShift").value;
+      const guideGrade = document.getElementById("tchGuideGrade").value;
+      const guideSection = document.getElementById("tchGuideSection").value;
+
+      const checkedBoxes = Array.from(document.querySelectorAll('input[name="tchSubChk"]:checked')).map(c => c.value);
+      if (!checkedBoxes.length) {
+        alert("Selecciona al menos una asignatura para asignar al docente.");
+        return;
+      }
+
+      if (!name || !username || !passwordHash) return;
+
+      const allUniqueCount = getAllUniqueSubjects().length;
+      const subjectsToSave = checkedBoxes.length === allUniqueCount ? ["TODAS"] : checkedBoxes;
+
+      const existingIdx = editingTeacherId
+        ? state.users.findIndex(u => u.id === editingTeacherId)
+        : state.users.findIndex(u => u.username.toLowerCase() === username.toLowerCase());
+
+      const userObj = {
+        id: existingIdx >= 0 ? state.users[existingIdx].id : "tch-" + Date.now(),
+        name,
+        username,
+        passwordHash,
+        role: "TEACHER",
+        shift,
+        guideGrade,
+        guideSection,
+        subjects: subjectsToSave
+      };
+
+      if (existingIdx >= 0) {
+        state.users[existingIdx] = userObj;
+      } else {
+        state.users.push(userObj);
+      }
+
+      cancelEditTeacher();
+      saveLocalState();
+      queueCloudSync();
+      addLog(`Docente guardado: ${name} (${username} · ${shift})`);
+      renderTeachersTable();
+    }
+
+    function editTeacher(userId) {
+      const target = state.users.find(u => u.id === userId);
+      if (!target || target.role === "DIRECTOR") return;
+      editingTeacherId = target.id;
+      document.getElementById("tchName").value = target.name;
+      document.getElementById("tchUser").value = target.username;
+      document.getElementById("tchPass").value = target.passwordHash;
+      document.getElementById("tchShift").value = target.shift || "Matutino";
+      document.getElementById("tchGuideGrade").value = target.guideGrade || "";
+      document.getElementById("tchGuideSection").value = target.guideSection || "";
+      renderTeacherSubjectCheckboxes(target.subjects || []);
+      document.getElementById("btnCancelEditTeacher").classList.remove("hidden");
+      document.getElementById("tchName").focus();
+    }
+
+    function cancelEditTeacher() {
+      editingTeacherId = null;
+      document.getElementById("tchName").value = "";
+      document.getElementById("tchUser").value = "";
+      document.getElementById("tchPass").value = "";
+      document.getElementById("tchShift").value = "Matutino";
+      document.getElementById("tchGuideGrade").value = "";
+      document.getElementById("tchGuideSection").value = "";
+      renderTeacherSubjectCheckboxes([]);
+      document.getElementById("btnCancelEditTeacher").classList.add("hidden");
+    }
+
+    function deleteTeacher(userId) {
+      if (!currentUser || currentUser.role !== "DIRECTOR") return;
+      const target = state.users.find(u => u.id === userId);
+      if (!target || target.role === "DIRECTOR") return;
+      if (!confirm(`¿Eliminar la cuenta del docente ${target.name}?`)) return;
+      state.users = state.users.filter(u => u.id !== userId);
+      if (editingTeacherId === userId) cancelEditTeacher();
+      saveLocalState();
+      queueCloudSync();
+      addLog(`Cuenta docente eliminada: ${target.username}`);
+      renderTeachersTable();
+    }
+
+    function getOrderedGradeSubjects(grade) {
+      const raw = state.curriculum[grade] || [];
+      const cuan = raw.filter(s => normalizeSubjectType(s) === "CUAN");
+      const cual = raw.filter(s => normalizeSubjectType(s) === "CUAL");
+      return { cuan, cual, all: [...cuan, ...cual] };
+    }
+
+    function renderGradesTable() {
+      const { shift, grade, section, period } = getActiveContext();
+      const { cuan, cual } = getOrderedGradeSubjects(grade);
+      const students = getFilteredStudents(shift, grade, section);
+
+      const thead = document.getElementById("gradesThead");
+      const tbody = document.getElementById("gradesTbody");
+      const emptyAlert = document.getElementById("gradesEmptyAlert");
+
+      emptyAlert.classList.toggle("hidden", students.length > 0);
+
+      let headHtml = `<tr><th>#</th><th>Estudiante</th>`;
+      cuan.forEach(sub => {
+        headHtml += `<th>${sub.name}<br><span class="pill pill-cuan">CUAN</span></th>`;
+      });
+      headHtml += `<th>Prom. CUAN</th>`;
+      cual.forEach(sub => {
+        headHtml += `<th>${sub.name}<br><span class="pill pill-qual">CUAL</span></th>`;
+      });
+      headHtml += `</tr>`;
+      thead.innerHTML = headHtml;
+
+      tbody.innerHTML = "";
+      students.forEach((stu, idx) => {
+        let rowHtml = `<tr><td>${idx + 1}</td><td><strong>${stu.name}</strong><br><span style="font-size:11px;color:var(--muted);">${stu.code} · ${stu.sex}</span></td>`;
+        const cuanScores = [];
+
+        cuan.forEach(sub => {
+          const key = getGradeKey(shift, grade, section, period, stu.id, sub.id);
+          const rawVal = state.grades[key];
+          const numVal = (rawVal !== undefined && rawVal !== "" && !isNaN(Number(rawVal))) ? Number(rawVal) : "";
+          const allowed = canEditSubject(sub.name);
+
+          if (numVal !== "") cuanScores.push(numVal);
+          const qual = scoreToQual(numVal);
+          rowHtml += `
+            <td>
+              <input type="number" min="0" max="100" class="grade-input" value="${numVal}" ${allowed ? "" : "disabled"}
+                onchange="onGradeInputChange('${key}', this.value, 'CUAN')" />
+              <div style="font-size:11px;font-weight:700;color:var(--muted);margin-top:2px;">${qual || "-"}</div>
+            </td>
+          `;
+        });
+
+        const avg = cuanScores.length
+          ? (cuanScores.reduce((a, b) => a + b, 0) / cuanScores.length).toFixed(1)
+          : "-";
+
+        rowHtml += `<td><strong>${avg}</strong></td>`;
+
+        cual.forEach(sub => {
+          const key = getGradeKey(shift, grade, section, period, stu.id, sub.id);
+          const rawVal = String(state.grades[key] ?? "").toUpperCase().trim();
+          const val = ["AA", "AS", "AF", "AI"].includes(rawVal) ? rawVal : "";
+          const allowed = canEditSubject(sub.name);
+
+          rowHtml += `
+            <td>
+              <select class="qual-select" ${allowed ? "" : "disabled"} onchange="onGradeInputChange('${key}', this.value, 'CUAL')">
+                <option value="">—</option>
+                <option value="AA" ${val === "AA" ? "selected" : ""}>AA</option>
+                <option value="AS" ${val === "AS" ? "selected" : ""}>AS</option>
+                <option value="AF" ${val === "AF" ? "selected" : ""}>AF</option>
+                <option value="AI" ${val === "AI" ? "selected" : ""}>AI</option>
+              </select>
+            </td>
+          `;
+        });
+
+        rowHtml += `</tr>`;
+        tbody.innerHTML += rowHtml;
+      });
+    }
+
+    function renderStudentsTable() {
+      const { shift, grade, section } = getActiveContext();
+      const students = getFilteredStudents(shift, grade, section);
+      const tbody = document.getElementById("studentsTbody");
+
+      if (!students.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);">Sin estudiantes en ${shift} · ${grade} "${section}".</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = students.map((s, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${s.code}</td>
+          <td><strong>${s.name}</strong></td>
+          <td>${s.sex}</td>
+          <td>${s.shift || "Matutino"} · ${s.grade} "${s.section}"</td>
+          <td><button class="btn btn-danger btn-sm" onclick="deleteStudent('${s.id}')">Eliminar</button></td>
+        </tr>
+      `).join("");
+    }
+
+    function computeClassroomStats(shift, grade, section, period) {
+      const { cuan } = getOrderedGradeSubjects(grade);
+      const students = getFilteredStudents(shift, grade, section);
+
+      let approved = 0;
+      let failed = 0;
+      let evaluated = 0;
+      let sumAvg = 0;
+
+      students.forEach(stu => {
+        const scores = cuan
+          .map(sub => state.grades[getGradeKey(shift, grade, section, period, stu.id, sub.id)])
+          .filter(v => v !== undefined && v !== "" && !isNaN(Number(v)))
+          .map(Number);
+
+        if (scores.length) {
+          const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+          evaluated++;
+          sumAvg += avg;
+          if (avg >= 60) approved++;
+          else failed++;
+        }
+      });
+
+      return {
+        enrollment: students.length,
+        evaluated,
+        approved,
+        failed,
+        approvalPct: evaluated ? ((approved / evaluated) * 100).toFixed(1) + "%" : "0.0%",
+        avgScore: evaluated ? (sumAvg / evaluated).toFixed(1) : "0.0"
+      };
+    }
+
+    function renderGuideView() {
+      const { shift, grade, section, period } = getActiveContext();
+      const { cuan, cual } = getOrderedGradeSubjects(grade);
+      const students = getFilteredStudents(shift, grade, section);
+      const stats = computeClassroomStats(shift, grade, section, period);
+
+      document.getElementById("guideKpis").innerHTML = `
+        <div class="kpi"><div class="kpi-label">Matrícula Aula</div><div class="kpi-val">${stats.enrollment}</div></div>
+        <div class="kpi"><div class="kpi-label">Aprobados (CUAN)</div><div class="kpi-val">${stats.approved}</div></div>
+        <div class="kpi"><div class="kpi-label">% Aprobación</div><div class="kpi-val">${stats.approvalPct}</div></div>
+        <div class="kpi"><div class="kpi-label">Promedio General CUAN</div><div class="kpi-val">${stats.avgScore}</div></div>
+      `;
+
+      const buildRow = (sub, type) => {
+        let evalCount = 0;
+        let okCount = 0;
+        let failCount = 0;
+        let sum = 0;
+        const qualCounts = { AA: 0, AS: 0, AF: 0, AI: 0 };
+
+        students.forEach(stu => {
+          const val = state.grades[getGradeKey(shift, grade, section, period, stu.id, sub.id)];
+          if (type === "CUAN") {
+            if (val !== undefined && val !== "" && !isNaN(Number(val))) {
+              const n = Number(val);
+              evalCount++;
+              sum += n;
+              if (n >= 60) okCount++;
+              else failCount++;
+            }
+          } else {
+            const clean = String(val || "").toUpperCase().trim();
+            if (["AA", "AS", "AF", "AI"].includes(clean)) {
+              evalCount++;
+              qualCounts[clean]++;
+              if (clean !== "AI") okCount++;
+              else failCount++;
+            }
+          }
+        });
+
+        const pct = evalCount ? ((okCount / evalCount) * 100).toFixed(1) + "%" : "0.0%";
+        let metric = "-";
+        if (type === "CUAN") {
+          metric = evalCount ? (sum / evalCount).toFixed(1) : "-";
+        } else if (evalCount) {
+          metric = `AA:${qualCounts.AA} · AS:${qualCounts.AS} · AF:${qualCounts.AF} · AI:${qualCounts.AI}`;
+        }
+
+        return `
+          <tr>
+            <td><strong>${sub.name}</strong></td>
+            <td><span class="pill ${type === "CUAN" ? "pill-cuan" : "pill-qual"}">${type}</span></td>
+            <td>${evalCount}</td>
+            <td><span class="pill pill-ok">${okCount}</span></td>
+            <td><span class="pill pill-fail">${failCount}</span></td>
+            <td>${pct}</td>
+            <td><strong>${metric}</strong></td>
+          </tr>
+        `;
+      };
+
+      const tbody = document.getElementById("guideSubjectTbody");
+      tbody.innerHTML =
+        `<tr class="section-divider-row"><td colspan="7">Asignaturas Cuantitativas (CUAN)</td></tr>` +
+        cuan.map(s => buildRow(s, "CUAN")).join("") +
+        `<tr class="section-divider-row"><td colspan="7">Asignaturas Cualitativas (CUAL — Solo Escala AA, AS, AF, AI)</td></tr>` +
+        cual.map(s => buildRow(s, "CUAL")).join("");
+    }
+
+    function renderConsolidatedView() {
+      const { shift, grade, section, period } = getActiveContext();
+      const { cuan, cual, all } = getOrderedGradeSubjects(grade);
+      const students = getFilteredStudents(shift, grade, section);
+
+      const thead = document.getElementById("consolidatedThead");
+      const tbody = document.getElementById("consolidatedTbody");
+
+      thead.innerHTML = `<tr>
+        <th>#</th>
+        <th>Código</th>
+        <th>Estudiante</th>
+        <th>Sexo</th>
+        ${cuan.map(s => `<th>${s.name}</th>`).join("")}
+        <th>Prom. CUAN</th>
+        ${cual.map(s => `<th>${s.name} (CUAL)</th>`).join("")}
+      </tr>`;
+
+      if (!students.length) {
+        tbody.innerHTML = `<tr><td colspan="${all.length + 5}" style="text-align:center;color:var(--muted);">No hay registros para consolidar en ${shift} · ${grade} "${section}".</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = students.map((stu, i) => {
+        const cuanVals = [];
+        const cuanCells = cuan.map(sub => {
+          const val = state.grades[getGradeKey(shift, grade, section, period, stu.id, sub.id)];
+          if (val !== undefined && val !== "" && !isNaN(Number(val))) {
+            cuanVals.push(Number(val));
+            return `<td>${Number(val)}</td>`;
+          }
+          return `<td></td>`;
+        }).join("");
+
+        const avg = cuanVals.length ? (cuanVals.reduce((a, b) => a + b, 0) / cuanVals.length).toFixed(1) : "-";
+
+        const cualCells = cual.map(sub => {
+          const val = String(state.grades[getGradeKey(shift, grade, section, period, stu.id, sub.id)] ?? "").toUpperCase().trim();
+          const clean = ["AA", "AS", "AF", "AI"].includes(val) ? val : "";
+          return `<td><strong>${clean}</strong></td>`;
+        }).join("");
+
+        return `<tr><td>${i + 1}</td><td>${stu.code}</td><td>${stu.name}</td><td>${stu.sex}</td>${cuanCells}<td><strong>${avg}</strong></td>${cualCells}</tr>`;
+      }).join("");
+    }
+
+    function buildShiftSummaryRows(shift, period) {
+      const rows = [];
+      GRADES_LIST.forEach(g => {
+        SECTIONS_LIST.forEach(sec => {
+          const st = computeClassroomStats(shift, g, sec, period);
+          rows.push({
+            label: `${g} "${sec}"`,
+            enrollment: st.enrollment,
+            approved: st.approved,
+            failed: st.failed,
+            approvalPct: st.approvalPct,
+            avgScore: st.avgScore
+          });
+        });
+      });
+      return rows;
+    }
+
+    function renderShiftSummaries() {
+      const { period } = getActiveContext();
+      const mRows = buildShiftSummaryRows("Matutino", period);
+      const vRows = buildShiftSummaryRows("Vespertino", period);
+
+      document.getElementById("shiftMorningTbody").innerHTML = mRows.map(r => `
+        <tr>
+          <td><strong>${r.label}</strong></td>
+          <td>${r.enrollment}</td>
+          <td>${r.approved}</td>
+          <td>${r.failed}</td>
+          <td>${r.approvalPct}</td>
+          <td><strong>${r.avgScore}</strong></td>
+        </tr>
+      `).join("");
+
+      document.getElementById("shiftEveningTbody").innerHTML = vRows.map(r => `
+        <tr>
+          <td><strong>${r.label}</strong></td>
+          <td>${r.enrollment}</td>
+          <td>${r.approved}</td>
+          <td>${r.failed}</td>
+          <td>${r.approvalPct}</td>
+          <td><strong>${r.avgScore}</strong></td>
+        </tr>
+      `).join("");
+    }
+
+    function renderTeachersTable() {
+      const tbody = document.getElementById("teachersTbody");
+      tbody.innerHTML = state.users.map(u => {
+        const subsList = u.subjects || [];
+        const subsHtml = subsList.includes("TODAS")
+          ? `<span class="subject-tag">Todas las asignaturas (Dirección)</span>`
+          : subsList.map(s => `<span class="subject-tag">${s}</span>`).join(" ");
+        const guideInfo = u.guideGrade
+          ? `${u.guideGrade}${u.guideSection ? ' "' + u.guideSection + '"' : ""}`
+          : (u.role === "DIRECTOR" ? "Dirección" : "—");
+        const actionsHtml = u.role === "DIRECTOR"
+          ? "Principal"
+          : `<div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="btn btn-light btn-sm" onclick="editTeacher('${u.id}')">Editar</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteTeacher('${u.id}')">Eliminar</button>
+             </div>`;
+        return `
+          <tr>
+            <td><strong>${u.name}</strong></td>
+            <td><code>${u.username}</code></td>
+            <td>${u.shift || "Ambos"}</td>
+            <td>${guideInfo}</td>
+            <td>${subsHtml || "—"}</td>
+            <td>${actionsHtml}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderLogs() {
+      const el = document.getElementById("activityLog");
+      if (!el) return;
+      if (!state.logs.length) {
+        el.innerHTML = `<div class="log-item" style="color:var(--muted);">Sin movimientos registrados aún.</div>`;
+        return;
+      }
+      el.innerHTML = state.logs.map(line => `<div class="log-item">${line}</div>`).join("");
+    }
+
+    function renderAll() {
+      updateShiftBanner();
+      renderGradesTable();
+      renderStudentsTable();
+      renderGuideView();
+      renderConsolidatedView();
+      renderShiftSummaries();
+      if (!editingTeacherId) {
+        renderTeacherSubjectCheckboxes([]);
+      }
+      renderTeachersTable();
+      renderLogs();
+      updateLastSaveBadge();
+      updateConnectivityUI();
+    }
+
+    function triggerExcelDownload(filename, htmlBody) {
+      const logoImg = state.logoBase64
+        ? `<img src="${state.logoBase64}" style="height:56px;width:auto;" />`
+        : `<strong>INGGL</strong>`;
+
+      const docHtml = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office"
+              xmlns:x="urn:schemas-microsoft-com:office:excel"
+              xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta charset="UTF-8" /></head>
+        <body>
+          <table>
+            <tr>
+              <td>${logoImg}</td>
+              <td colspan="8">
+                <h2 style="margin:0;color:#14532d;">${state.schoolName}</h2>
+                <div>${state.municipality}</div>
+              </td>
+            </tr>
+          </table>
+          <br/>
+          ${htmlBody}
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob([docHtml], { type: "application/vnd.ms-excel;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      addLog(`Exportado archivo Excel: ${filename}`);
+    }
+
+    function exportConsolidatedExcel() {
+      const { shift, grade, section, period } = getActiveContext();
+      const theadHtml = document.getElementById("consolidatedThead").outerHTML;
+      const tbodyHtml = document.getElementById("consolidatedTbody").outerHTML;
+      triggerExcelDownload(
+        `Consolidado_${shift}_${grade}_${section}_${period.replace(/\s+/g, "_")}.xls`,
+        `<h3>Turno ${shift} · ${grade} "${section}" · ${period}</h3><table border="1">${theadHtml}${tbodyHtml}</table>`
+      );
+    }
+
+    function exportPerformanceExcel() {
+      const { shift, grade, section, period } = getActiveContext();
+      const tbodyHtml = document.getElementById("guideSubjectTbody").outerHTML;
+      triggerExcelDownload(
+        `Rendimiento_${shift}_${grade}_${section}_${period.replace(/\s+/g, "_")}.xls`,
+        `<h3>Rendimiento — Turno ${shift} · ${grade} "${section}" · ${period}</h3><table border="1">
+          <thead>
+            <tr>
+              <th>Asignatura</th><th>Tipo</th><th>Evaluados</th><th>Aprobados</th><th>Reprobados</th><th>% Aprobación</th><th>Promedio / Nivel</th>
+            </tr>
+          </thead>
+          ${tbodyHtml}
+        </table>`
+      );
+    }
+
+    function shiftTableHtml(shift, period) {
+      const rows = buildShiftSummaryRows(shift, period);
+      const bodyRows = rows.map(r => `
+        <tr>
+          <td>${r.label}</td>
+          <td>${r.enrollment}</td>
+          <td>${r.approved}</td>
+          <td>${r.failed}</td>
+          <td>${r.approvalPct}</td>
+          <td>${r.avgScore}</td>
+        </tr>
+      `).join("");
+      return `
+        <h3>Consolidado General — Turno ${shift} (${period})</h3>
+        <table border="1">
+          <thead>
+            <tr><th>Grado / Sec.</th><th>Matrícula</th><th>Aprobados</th><th>Reprobados</th><th>% Aprobación</th><th>Promedio</th></tr>
+          </thead>
+          <tbody>${bodyRows}</tbody>
+        </table>
+      `;
+    }
+
+    function exportShiftSummaryExcel(shift) {
+      const { period } = getActiveContext();
+      triggerExcelDownload(
+        `Consolidado_Turno_${shift}_${period.replace(/\s+/g, "_")}.xls`,
+        shiftTableHtml(shift, period)
+      );
+    }
+
+    function exportBothShiftsExcel() {
+      const { period } = getActiveContext();
+      triggerExcelDownload(
+        `Consolidado_Matutino_Vespertino_${period.replace(/\s+/g, "_")}.xls`,
+        shiftTableHtml("Matutino", period) + "<br/>" + shiftTableHtml("Vespertino", period)
+      );
+    }
+
+    function downloadJsonBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Respaldo_INGGL_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      addLog("Respaldo JSON descargado.");
+    }
+
+    function importJsonBackup(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          state = Object.assign(createBlankState(), parsed);
+          state.curriculum = ensureCurriculumConsistency(state.curriculum);
+          saveLocalState();
+          renderLogos();
+          renderAll();
+          addLog("Respaldo JSON restaurado.");
+          if (state.syncEndpoint) pushToCloud(true);
+        } catch (err) {
+          alert("El archivo JSON no es válido.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    renderLogos();
+    updateConnectivityUI();
+    updateLastSaveBadge();
   </script>
 </body>
 </html>
