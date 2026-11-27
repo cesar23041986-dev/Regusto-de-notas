@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Registro de Notas — Instituto Nacional Gaspar García Laviana</title>
+  <style>
+    :root {
+      --primary: #14532d;
+      --primary-dark: #0f3d21;
+      --primary-light: #166534;
+      --accent: #b45309;
+      --accent-soft: #fef3c7;
+      --bg: #f3f6f4;
+      --surface: #ffffff;
+      --surface-alt: #f8faf9;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #d1d5db;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --warn: #b45309;
+      --warn-bg: #fef3c7;
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --radius: 10px;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+
+    .topbar-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .logo-fallback {
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      opacity: 0.88;
+    }
+
+    .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .badge.online {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .badge.syncing {
+      background: #d97706;
+      color: #fff;
+    }
+
+    .badge.offline-warn {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 8px 13px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background: #92400e;
+    }
+
+    .btn-light {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-light:hover:not(:disabled) {
+      background: #f9fafb;
+    }
+
+    .btn-ghost-light {
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    .btn-ghost-light:hover:not(:disabled) {
+      background: rgba(255,255,255,0.24);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 18px 16px 48px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .login-wrap {
+      max-width: 540px;
+      margin: 24px auto;
+    }
+
+    .logo-upload-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface-alt);
+      border: 1px dashed #9ca3af;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+    }
+
+    .logo-preview-lg {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-preview-lg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(20, 83, 45, 0.25);
+      border-color: var(--primary);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 8px 9px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f0fdf4;
+      color: var(--primary-dark);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    .grade-input {
+      width: 68px;
+      padding: 6px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .qual-select {
+      min-width: 68px;
+      padding: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .pill-cuan {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .pill-qual {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .pill-ok {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .pill-fail {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .kpi {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .kpi-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-top: 2px;
+    }
+
+    .alert {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .alert-info {
+      background: #eff6ff;
+      color: #1e3a8a;
+      border: 1px solid #bfdbfe;
+    }
+
+    .alert-warn {
+      background: var(--warn-bg);
+      color: #78350f;
+      border: 1px solid #fde68a;
+    }
+
+    .alert-ok {
+      background: var(--success-bg);
+      color: #14532d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .log-list {
+      max-height: 220px;
+      overflow-y: auto;
+      font-size: 12px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .log-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .log-item:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card {
+        padding: 14px;
+      }
+      .btn {
+        width: 100%;
+      }
+      .status-bar .btn, .card-header .btn, .tabs .tab-btn {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo-box" id="topLogoBox">
+          <span class="logo-fallback" id="topLogoFallback">INGGL</span>
+        </div>
+        <div>
+          <div class="brand-title" id="topSchoolName">Instituto Nacional Gaspar García Laviana</div>
+          <div class="brand-sub">Tola, Rivas, Nicaragua · Sistema de Registro de Notas (MINED)</div>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <span id="onlineBadge" class="badge offline-warn">● Sin conexión</span>
+        <span id="syncBadge" class="badge">Sin URL en línea</span>
+        <span id="lastSaveBadge" class="badge">Listo</span>
+        <button id="btnSyncNow" class="btn btn-ghost-light btn-sm hidden" onclick="manualSync()">Sincronizar ahora</button>
+        <button id="btnLogout" class="btn btn-ghost-light btn-sm hidden" onclick="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- PANTALLA DE INICIO DE SESIÓN -->
+    <section id="loginSection" class="login-wrap">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Acceso al Sistema de Notas</div>
+            <div class="card-subtitle">Instituto Nacional Gaspar García Laviana · Tola, Rivas</div>
+          </div>
+        </div>
+
+        <div class="logo-upload-bar">
+          <div class="logo-preview-lg" id="loginLogoPreview">
+            <span class="logo-fallback" style="color:#14532d;">INGGL</span>
+          </div>
+          <div style="flex:1; min-width:190px;">
+            <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Logo Institucional</div>
+            <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">
+              Sube o cambia el logo oficial para mostrarlo en el sistema y en las exportaciones.
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <label class="btn btn-light btn-sm" style="cursor:pointer; margin:0;">
+                Subir / Cambiar Logo
+                <input type="file" id="logoInputLogin" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)" />
+              </label>
+              <button type="button" class="btn btn-light btn-sm" onclick="clearLogo()">Quitar Logo</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="loginError" class="alert alert-warn hidden"></div>
+
+        <form onsubmit="handleLogin(event)">
+          <div class="field">
+            <label for="loginUser">Usuario</label>
+            <input type="text" id="loginUser" placeholder="Ej. direccion o usuario docente" required autocomplete="username" />
+          </div>
+          <div class="field">
+            <label for="loginPass">Contraseña</label>
+            <input type="password" id="loginPass" placeholder="Contraseña" required autocomplete="current-password" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Ingresar al Sistema</button>
+        </form>
+
+        <div class="alert alert-info" style="margin-top:14px; margin-bottom:0;">
+          <strong>Cuenta inicial de Dirección:</strong> Usuario <code>direccion</code> · Clave <code>inggl2026</code>.
+          Desde Dirección puedes crear cuentas para docentes, asignar grado guía y asignaturas, y configurar la URL de sincronización en línea.
+        </div>
+      </div>
+    </section>
+
+    <!-- APLICACIÓN PRINCIPAL -->
+    <section id="appSection" class="hidden">
+      <div class="card" style="padding:12px 16px;">
+        <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+          <div>
+            <span style="font-size:13px; color:var(--muted);">Sesión activa:</span>
+            <strong id="sessionUserLabel" style="font-size:14px; color:var(--primary-dark);"></strong>
+            <span id="sessionRolePill" class="pill pill-cuan" style="margin-left:6px;"></span>
+          </div>
+          <div class="grid-3" style="gap:8px; margin:0; align-items:center;">
+            <select id="activeGradeSelect" onchange="onFilterChange()">
+              <option value="7mo">7mo Grado</option>
+              <option value="8vo">8vo Grado</option>
+              <option value="9no">9no Grado</option>
+              <option value="10mo">10mo Grado</option>
+              <option value="11mo">11mo Grado</option>
+            </select>
+            <select id="activeSectionSelect" onchange="onFilterChange()">
+              <option value="A">Sección A</option>
+              <option value="B">Sección B</option>
+              <option value="C">Sección C</option>
+            </select>
+            <select id="activePeriodSelect" onchange="onFilterChange()">
+              <option value="I Corte">I Corte Evaluativo</option>
+              <option value="II Corte">II Corte Evaluativo</option>
+              <option value="III Corte">III Corte Evaluativo</option>
+              <option value="IV Corte">IV Corte Evaluativo</option>
+              <option value="Semestral">Consolidado Semestral</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs" id="mainTabs">
+        <button class="tab-btn active" data-tab="gradesTab" onclick="switchTab('gradesTab')">Registro de Notas</button>
+        <button class="tab-btn" data-tab="studentsTab" onclick="switchTab('studentsTab')">Estudiantes</button>
+        <button class="tab-btn" data-tab="guideTab" onclick="switchTab('guideTab')">Rendimiento de Guía</button>
+        <button class="tab-btn" data-tab="reportsTab" onclick="switchTab('reportsTab')">Consolidados y Excel</button>
+        <button class="tab-btn dir-only" data-tab="teachersTab" onclick="switchTab('teachersTab')">Docentes y Malla</button>
+        <button class="tab-btn dir-only" data-tab="syncTab" onclick="switchTab('syncTab')">Sincronización Online</button>
+      </div>
+
+      <!-- TAB 1: REGISTRO DE NOTAS -->
+      <div id="gradesTab" class="tab-panel">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Registro de Calificaciones</div>
+              <div class="card-subtitle">
+                Las asignaturas <strong>CUAN</strong> calculan promedio numérico y equivalencia cualitativa (AA, AS, AF, AI). Las asignaturas <strong>CUAL</strong> usan casilla cualitativa única.
+              </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button class="btn btn-primary btn-sm" onclick="persistAndSync('Registro manual guardado')">Guardar y Sincronizar</button>
+            </div>
+          </div>
+
+          <div id="gradesEmptyAlert" class="alert alert-warn hidden">
+            No hay estudiantes registrados en este grado y sección. Ve a la pestaña <strong>Estudiantes</strong> para agregar estudiantes.
+          </div>
+
+          <div class="table-wrap">
+            <table id="gradesTable">
+              <thead id="gradesThead"></thead>
+              <tbody id="gradesTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: ESTUDIANTES -->
+      <div id="studentsTab" class="tab-panel hidden">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Gestión de Estudiantes</div>
+              <div class="card-subtitle">Agrega o administra estudiantes del grado y sección seleccionados. Se guardan automáticamente.</div>
+            </div>
+          </div>
+
+          <form onsubmit="addStudent(event)" class="grid-4" style="align-items:end; margin-bottom:14px;">
+            <div class="field" style="margin:0;">
+              <label for="stuCode">Código / Matrícula</label>
+              <input type="text" id="stuCode" placeholder="Ej. 2026-001" />
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="stuName">Nombre y Apellidos</label>
+              <input type="text" id="stuName" placeholder="Nombre completo del estudiante" required />
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="stuSex">Sexo</label>
+              <select id="stuSex">
+                <option value="F">Femenino (F)</option>
+                <option value="M">Masculino (M)</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0;">
+              <button type="submit" class="btn btn-primary" style="width:100%;">+ Agregar Estudiante</button>
+            </div>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Código</th>
+                  <th>Estudiante</th>
+                  <th>Sexo</th>
+                  <th>Grado / Sec.</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: RENDIMIENTO DE GUÍA -->
+      <div id="guideTab" class="tab-panel hidden">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Rendimiento de Aula Guía</div>
+              <div class="card-subtitle">Resumen estadístico de matrícula, aprobación, reprobación y promedio por asignatura del aula seleccionada.</div>
+            </div>
+            <button class="btn btn-accent btn-sm" onclick="exportPerformanceExcel()">Exportar Rendimiento (.xls)</button>
+          </div>
+
+          <div class="kpi-grid" id="guideKpis"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Asignatura</th>
+                  <th>Tipo</th>
+                  <th>Evaluados</th>
+                  <th>Aprobados</th>
+                  <th>Reprobados</th>
+                  <th>% Aprobación</th>
+                  <th>Promedio / Nivel</th>
+                </tr>
+              </thead>
+              <tbody id="guideSubjectTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: CONSOLIDADOS Y EXCEL -->
+      <div id="reportsTab" class="tab-panel hidden">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Reportes Consolidados y Exportación Excel (.xls)</div>
+              <div class="card-subtitle">Genera sabana consolidada institucional o reporte de rendimiento con el logo oficial de la institución.</div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button class="btn btn-primary btn-sm" onclick="exportConsolidatedExcel()">Descargar Consolidado (.xls)</button>
+              <button class="btn btn-accent btn-sm" onclick="exportPerformanceExcel()">Descargar Rendimiento (.xls)</button>
+              <button class="btn btn-light btn-sm" onclick="downloadJsonBackup()">Respaldo JSON</button>
+              <label class="btn btn-light btn-sm" style="cursor:pointer; margin:0;">
+                Cargar JSON
+                <input type="file" accept=".json,application/json" style="display:none;" onchange="importJsonBackup(event)" />
+              </label>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead id="consolidatedThead"></thead>
+              <tbody id="consolidatedTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: DOCENTES Y MALLA (DIRECCIÓN) -->
+      <div id="teachersTab" class="tab-panel hidden">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Identidad Institucional y Logo</div>
+              <div class="card-subtitle">Administra el logo del Instituto Nacional Gaspar García Laviana.</div>
+            </div>
+          </div>
+
+          <div class="logo-upload-bar">
+            <div class="logo-preview-lg" id="dirLogoPreview">
+              <span class="logo-fallback" style="color:#14532d;">INGGL</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:13px; font-weight:700; margin-bottom:4px;">Logo Oficial del Centro</div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                <label class="btn btn-primary btn-sm" style="cursor:pointer; margin:0;">
+                  Subir / Cambiar Logo
+                  <input type="file" id="logoInputDir" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)" />
+                </label>
+                <button type="button" class="btn btn-light btn-sm" onclick="clearLogo()">Quitar Logo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Cuentas de Docentes y Asignación</div>
+              <div class="card-subtitle">Crea cuentas para docentes con su grado guía y asignaturas permitidas.</div>
+            </div>
+          </div>
+
+          <form onsubmit="addTeacher(event)" class="grid-3" style="align-items:end; margin-bottom:14px;">
+            <div class="field" style="margin:0;">
+              <label for="tchName">Nombre del Docente</label>
+              <input type="text" id="tchName" placeholder="Ej. Prof. María López" required />
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="tchUser">Usuario de acceso</label>
+              <input type="text" id="tchUser" placeholder="Ej. mlopez" required />
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="tchPass">Contraseña</label>
+              <input type="text" id="tchPass" placeholder="Clave inicial" required />
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="tchGuideGrade">Grado Guía</label>
+              <select id="tchGuideGrade">
+                <option value="">Ninguno</option>
+                <option value="7mo">7mo Grado</option>
+                <option value="8vo">8vo Grado</option>
+                <option value="9no">9no Grado</option>
+                <option value="10mo">10mo Grado</option>
+                <option value="11mo">11mo Grado</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="tchSubjects">Asignaturas (separadas por coma o "TODAS")</label>
+              <input type="text" id="tchSubjects" value="TODAS" placeholder="TODAS o Matemática, Física..." />
+            </div>
+            <div class="field" style="margin:0;">
+              <button type="submit" class="btn btn-primary" style="width:100%;">+ Guardar Docente</button>
+            </div>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Docente</th>
+                  <th>Usuario</th>
+                  <th>Grado Guía</th>
+                  <th>Asignaturas</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="teachersTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: SINCRONIZACIÓN ONLINE (DIRECCIÓN) -->
+      <div id="syncTab" class="tab-panel hidden">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Configuración de Sincronización en Línea</div>
+              <div class="card-subtitle">Conecta una URL de Google Apps Script (Web App) o API REST compatible para guardar y cargar datos en línea desde cualquier dispositivo.</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="syncEndpointInput">URL de Aplicación Web / Endpoint Online (HTTPS)</label>
+            <input type="url" id="syncEndpointInput" placeholder="https://script.google.com/macros/s/.../exec" />
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+            <button class="btn btn-primary btn-sm" onclick="saveSyncConfig()">Guardar URL Online</button>
+            <button class="btn btn-accent btn-sm" onclick="pullFromCloud()">Descargar desde Nube</button>
+            <button class="btn btn-light btn-sm" onclick="pushToCloud()">Subir Todo a Nube</button>
+          </div>
+
+          <div class="card-subtitle" style="font-weight:700; margin-bottom:6px;">Bitácora de Actividad y Sincronización</div>
+          <div class="log-list" id="activityLog"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "INGGL_SISTEMA_NOTAS_ONLINE_V1";
+
+    const DEFAULT_CURRICULUM = {
+      "7mo": [
+        { id: "lengua7", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat7", name: "Matemática", type: "CUAN" },
+        { id: "ing7", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "ccnn7", name: "Ciencias Naturales", type: "CUAN" },
+        { id: "est7", name: "Estudios Sociales", type: "CUAN" },
+        { id: "tac7", name: "TAC", type: "CUAN" },
+        { id: "crec7", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "edfis7", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "8vo": [
+        { id: "lengua8", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat8", name: "Matemática", type: "CUAN" },
+        { id: "ing8", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "ccnn8", name: "Ciencias Naturales", type: "CUAN" },
+        { id: "est8", name: "Estudios Sociales", type: "CUAN" },
+        { id: "tac8", name: "TAC", type: "CUAN" },
+        { id: "crec8", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "edfis8", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "9no": [
+        { id: "lengua9", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat9", name: "Matemática", type: "CUAN" },
+        { id: "ing9", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "ccnn9", name: "Ciencias Naturales", type: "CUAN" },
+        { id: "est9", name: "Estudios Sociales", type: "CUAN" },
+        { id: "tac9", name: "TAC", type: "CUAN" },
+        { id: "crec9", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "edfis9", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "10mo": [
+        { id: "lengua10", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat10", name: "Matemática", type: "CUAN" },
+        { id: "ing10", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "fis10", name: "Física", type: "CUAN" },
+        { id: "quim10", name: "Química", type: "CUAN" },
+        { id: "bio10", name: "Biología", type: "CUAN" },
+        { id: "hist10", name: "Historia y Geografía", type: "CUAN" },
+        { id: "filo10", name: "Filosofía", type: "CUAN" },
+        { id: "crec10", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "edfis10", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ],
+      "11mo": [
+        { id: "lengua11", name: "Lengua y Literatura", type: "CUAN" },
+        { id: "mat11", name: "Matemática", type: "CUAN" },
+        { id: "ing11", name: "Lengua Extranjera (Inglés)", type: "CUAN" },
+        { id: "fis11", name: "Física", type: "CUAN" },
+        { id: "quim11", name: "Química", type: "CUAN" },
+        { id: "bio11", name: "Biología", type: "CUAN" },
+        { id: "soci11", name: "Sociología", type: "CUAN" },
+        { id: "econ11", name: "Economía", type: "CUAN" },
+        { id: "crec11", name: "Crecimiento en Valores", type: "CUAL" },
+        { id: "edfis11", name: "Educación Física y Práctica Deportiva", type: "CUAL" }
+      ]
+    };
+
+    function createBlankState() {
+      return {
+        schoolName: "Instituto Nacional Gaspar García Laviana",
+        municipality: "Tola, Rivas, Nicaragua",
+        logoBase64: "",
+        syncEndpoint: "",
+        updatedAt: new Date().toISOString(),
+        users: [
+          {
+            id: "dir-1",
+            name: "Dirección General",
+            username: "direccion",
+            passwordHash: "inggl2026",
+            role: "DIRECTOR",
+            guideGrade: "",
+            subjects: ["TODAS"]
+          }
+        ],
+        curriculum: JSON.parse(JSON.stringify(DEFAULT_CURRICULUM)),
+        students: [],
+        grades: {},
+        logs: []
+      };
+    }
+
+    let state = loadLocalState();
+    let currentUser = null;
+    let syncQueue = [];
+
+    function loadLocalState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return createBlankState();
+        const parsed = JSON.parse(raw);
+        return Object.assign(createBlankState(), parsed);
+      } catch (e) {
+        return createBlankState();
+      }
+    }
+
+    function saveLocalState() {
+      state.updatedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateLastSaveBadge();
+    }
+
+    function addLog(message) {
+      const time = new Date().toLocaleTimeString("es-NI", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      state.logs.unshift(`[${time}] ${message}`);
+      if (state.logs.length > 80) state.logs.length = 80;
+      renderLogs();
+    }
+
+    function updateLastSaveBadge() {
+      const el = document.getElementById("lastSaveBadge");
+      const d = new Date(state.updatedAt || Date.now());
+      el.textContent = "Guardado " + d.toLocaleTimeString("es-NI", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function updateConnectivityUI() {
+      const badge = document.getElementById("onlineBadge");
+      const syncBadge = document.getElementById("syncBadge");
+      const isOnline = navigator.onLine;
+      if (isOnline) {
+        badge.textContent = "● En línea";
+        badge.className = "badge online";
+      } else {
+        badge.textContent = "● Sin internet";
+        badge.className = "badge offline-warn";
+      }
+
+      if (state.syncEndpoint && state.syncEndpoint.trim()) {
+        syncBadge.textContent = "Nube conectada";
+        syncBadge.className = "badge online";
+      } else {
+        syncBadge.textContent = "Sin URL en línea";
+        syncBadge.className = "badge";
+      }
+    }
+
+    window.addEventListener("online", () => {
+      updateConnectivityUI();
+      addLog("Conexión a internet restaurada.");
+      if (state.syncEndpoint && (syncQueue.length > 0 || currentUser)) {
+        pushToCloud(true);
+      }
+    });
+
+    window.addEventListener("offline", () => {
+      updateConnectivityUI();
+      addLog("Sin conexión a internet. Cambios en cola para sincronizar.");
+    });
+
+    function renderLogos() {
+      const topBox = document.getElementById("topLogoBox");
+      const loginBox = document.getElementById("loginLogoPreview");
+      const dirBox = document.getElementById("dirLogoPreview");
+
+      const content = state.logoBase64
+        ? `<img src="${state.logoBase64}" alt="Logo Institucional" />`
+        : `<span class="logo-fallback" style="color:${topBox ? "#fff" : "#14532d"};">INGGL</span>`;
+
+      if (topBox) {
+        topBox.innerHTML = state.logoBase64
+          ? `<img src="${state.logoBase64}" alt="Logo" />`
+          : `<span class="logo-fallback">INGGL</span>`;
+      }
+      if (loginBox) loginBox.innerHTML = content;
+      if (dirBox) dirBox.innerHTML = content;
+    }
+
+    function handleLogoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        state.logoBase64 = e.target.result;
+        saveLocalState();
+        renderLogos();
+        addLog("Logo institucional actualizado.");
+        if (state.syncEndpoint) pushToCloud(true);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearLogo() {
+      state.logoBase64 = "";
+      saveLocalState();
+      renderLogos();
+      addLog("Logo institucional restablecido.");
+      if (state.syncEndpoint) pushToCloud(true);
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const userVal = document.getElementById("loginUser").value.trim().toLowerCase();
+      const passVal = document.getElementById("loginPass").value;
+      const errBox = document.getElementById("loginError");
+
+      const found = state.users.find(
+        u => u.username.toLowerCase() === userVal && u.passwordHash === passVal
+      );
+
+      if (!found) {
+        errBox.textContent = "Usuario o contraseña incorrectos.";
+        errBox.classList.remove("hidden");
+        return;
+      }
+
+      errBox.classList.add("hidden");
+      currentUser = found;
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("appSection").classList.remove("hidden");
+      document.getElementById("btnLogout").classList.remove("hidden");
+      document.getElementById("btnSyncNow").classList.remove("hidden");
+
+      document.getElementById("sessionUserLabel").textContent = `${currentUser.name} (${currentUser.username})`;
+      const rolePill = document.getElementById("sessionRolePill");
+      rolePill.textContent = currentUser.role === "DIRECTOR" ? "DIRECCIÓN" : "DOCENTE";
+
+      const isDir = currentUser.role === "DIRECTOR";
+      document.querySelectorAll(".dir-only").forEach(el => {
+        el.classList.toggle("hidden", !isDir);
+      });
+
+      if (!isDir && currentUser.guideGrade) {
+        document.getElementById("activeGradeSelect").value = currentUser.guideGrade;
+      }
+
+      document.getElementById("syncEndpointInput").value = state.syncEndpoint || "";
+      addLog(`Inicio de sesión: ${currentUser.name}`);
+
+      if (state.syncEndpoint && navigator.onLine) {
+        pullFromCloud(true);
+      } else {
+        renderAll();
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      document.getElementById("appSection").classList.add("hidden");
+      document.getElementById("loginSection").classList.remove("hidden");
+      document.getElementById("btnLogout").classList.add("hidden");
+      document.getElementById("btnSyncNow").classList.add("hidden");
+      document.getElementById("loginPass").value = "";
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.add("hidden"));
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById(tabId).classList.remove("hidden");
+      const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+      if (btn) btn.classList.add("active");
+      renderAll();
+    }
+
+    function getActiveContext() {
+      return {
+        grade: document.getElementById("activeGradeSelect").value,
+        section: document.getElementById("activeSectionSelect").value,
+        period: document.getElementById("activePeriodSelect").value
+      };
+    }
+
+    function onFilterChange() {
+      renderAll();
+    }
+
+    function canEditSubject(subjectName) {
+      if (!currentUser) return false;
+      if (currentUser.role === "DIRECTOR") return true;
+      const list = currentUser.subjects || ["TODAS"];
+      if (list.includes("TODAS")) return true;
+      return list.map(s => s.trim().toLowerCase()).includes(subjectName.trim().toLowerCase());
+    }
+
+    function getFilteredStudents(grade, section) {
+      return state.students.filter(s => s.grade === grade && s.section === section);
+    }
+
+    function getGradeKey(grade, section, period, studentId, subjectId) {
+      return `${grade}__${section}__${period}__${studentId}__${subjectId}`;
+    }
+
+    function scoreToQual(score) {
+      if (score === "" || score === null || score === undefined || isNaN(Number(score))) return "";
+      const n = Number(score);
+      if (n >= 90) return "AA";
+      if (n >= 76) return "AS";
+      if (n >= 60) return "AF";
+      return "AI";
+    }
+
+    function onGradeInputChange(key, value, type) {
+      if (type === "CUAN") {
+        if (value === "") {
+          delete state.grades[key];
+        } else {
+          let num = Number(value);
+          if (num < 0) num = 0;
+          if (num > 100) num = 100;
+          state.grades[key] = num;
+        }
+      } else {
+        if (!value) {
+          delete state.grades[key];
+        } else {
+          state.grades[key] = value;
+        }
+      }
+      saveLocalState();
+      queueCloudSync();
+      renderGradesTable();
+      renderGuideView();
+      renderConsolidatedView();
+    }
+
+    function persistAndSync(reason) {
+      saveLocalState();
+      addLog(reason || "Datos guardados.");
+      if (state.syncEndpoint) {
+        pushToCloud();
+      }
+    }
+
+    let syncDebounceTimer = null;
+    function queueCloudSync() {
+      if (!state.syncEndpoint) return;
+      syncQueue.push(Date.now());
+      clearTimeout(syncDebounceTimer);
+      syncDebounceTimer = setTimeout(() => {
+        pushToCloud(true);
+      }, 900);
+    }
+
+    async function saveSyncConfig() {
+      const url = document.getElementById("syncEndpointInput").value.trim();
+      state.syncEndpoint = url;
+      saveLocalState();
+      updateConnectivityUI();
+      addLog(url ? "URL de sincronización en línea guardada." : "URL de sincronización removida.");
+      if (url && navigator.onLine) {
+        await pushToCloud();
+      }
+    }
+
+    async function pushToCloud(silent = false) {
+      if (!state.syncEndpoint) {
+        if (!silent) alert("Configura primero la URL de sincronización en la pestaña Sincronización Online.");
+        return;
+      }
+      if (!navigator.onLine) {
+        addLog("Sin conexión: guardado local listo para sincronizar al volver el internet.");
+        return;
+      }
+
+      const badge = document.getElementById("syncBadge");
+      badge.textContent = "Sincronizando...";
+      badge.className = "badge syncing";
+
+      try {
+        const res = await fetch(state.syncEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "saveState", data: state })
+        });
+        const json = await res.json();
+        if (json && json.ok !== false) {
+          syncQueue = [];
+          badge.textContent = "Sincronizado";
+          badge.className = "badge online";
+          addLog("Datos sincronizados en línea correctamente.");
+        } else {
+          throw new Error(json.error || "Respuesta inválida del servidor");
+        }
+      } catch (err) {
+        badge.textContent = "Error sync";
+        badge.className = "badge offline-warn";
+        addLog("Error al sincronizar en línea: " + err.message);
+      }
+    }
+
+    async function pullFromCloud(silent = false) {
+      if (!state.syncEndpoint) {
+        if (!silent) alert("Configura primero la URL de sincronización en línea.");
+        return;
+      }
+      if (!navigator.onLine) {
+        if (!silent) alert("No hay conexión a internet.");
+        return;
+      }
+
+      const badge = document.getElementById("syncBadge");
+      badge.textContent = "Descargando...";
+      badge.className = "badge syncing";
+
+      try {
+        const res = await fetch(state.syncEndpoint, { method: "GET" });
+        const json = await res.json();
+        const remoteData = json && json.data ? json.data : null;
+        if (remoteData && typeof remoteData === "object") {
+          const keepEndpoint = state.syncEndpoint;
+          state = Object.assign(createBlankState(), remoteData);
+          if (!state.syncEndpoint && keepEndpoint) state.syncEndpoint = keepEndpoint;
+          saveLocalState();
+          renderLogos();
+          renderAll();
+          badge.textContent = "Nube conectada";
+          badge.className = "badge online";
+          addLog("Datos actualizados desde la nube.");
+        } else {
+          badge.textContent = "Nube conectada";
+          badge.className = "badge online";
+          if (!silent) addLog("La nube está vacía; puedes subir tus datos actuales.");
+        }
+      } catch (err) {
+        badge.textContent = "Error sync";
+        badge.className = "badge offline-warn";
+        addLog("Error al leer desde la nube: " + err.message);
+      }
+    }
+
+    function manualSync() {
+      if (state.syncEndpoint) {
+        pushToCloud();
+      } else {
+        saveLocalState();
+        addLog("Guardado local verificado.");
+      }
+    }
+
+    function addStudent(event) {
+      event.preventDefault();
+      const { grade, section } = getActiveContext();
+      const code = document.getElementById("stuCode").value.trim() || `EST-${Date.now().toString().slice(-4)}`;
+      const name = document.getElementById("stuName").value.trim();
+      const sex = document.getElementById("stuSex").value;
+
+      if (!name) return;
+
+      state.students.push({
+        id: "stu-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+        code,
+        name,
+        sex,
+        grade,
+        section
+      });
+
+      document.getElementById("stuCode").value = "";
+      document.getElementById("stuName").value = "";
+      saveLocalState();
+      queueCloudSync();
+      addLog(`Estudiante agregado: ${name} (${grade} ${section})`);
+      renderAll();
+    }
+
+    function deleteStudent(studentId) {
+      if (!confirm("¿Eliminar este estudiante y sus notas registradas?")) return;
+      state.students = state.students.filter(s => s.id !== studentId);
+      Object.keys(state.grades).forEach(k => {
+        if (k.includes(`__${studentId}__`)) delete state.grades[k];
+      });
+      saveLocalState();
+      queueCloudSync();
+      addLog("Estudiante eliminado.");
+      renderAll();
+    }
+
+    function addTeacher(event) {
+      event.preventDefault();
+      if (!currentUser || currentUser.role !== "DIRECTOR") return;
+      const name = document.getElementById("tchName").value.trim();
+      const username = document.getElementById("tchUser").value.trim();
+      const passwordHash = document.getElementById("tchPass").value;
+      const guideGrade = document.getElementById("tchGuideGrade").value;
+      const subjRaw = document.getElementById("tchSubjects").value.trim();
+      const subjects = !subjRaw || subjRaw.toUpperCase() === "TODAS"
+        ? ["TODAS"]
+        : subjRaw.split(",").map(s => s.trim()).filter(Boolean);
+
+      if (!name || !username || !passwordHash) return;
+
+      const existingIdx = state.users.findIndex(u => u.username.toLowerCase() === username.toLowerCase());
+      const userObj = {
+        id: existingIdx >= 0 ? state.users[existingIdx].id : "tch-" + Date.now(),
+        name,
+        username,
+        passwordHash,
+        role: "TEACHER",
+        guideGrade,
+        subjects
+      };
+
+      if (existingIdx >= 0) {
+        state.users[existingIdx] = userObj;
+      } else {
+        state.users.push(userObj);
+      }
+
+      document.getElementById("tchName").value = "";
+      document.getElementById("tchUser").value = "";
+      document.getElementById("tchPass").value = "";
+      saveLocalState();
+      queueCloudSync();
+      addLog(`Docente guardado: ${name} (${username})`);
+      renderTeachersTable();
+    }
+
+    function deleteTeacher(userId) {
+      if (!currentUser || currentUser.role !== "DIRECTOR") return;
+      const target = state.users.find(u => u.id === userId);
+      if (!target || target.role === "DIRECTOR") return;
+      state.users = state.users.filter(u => u.id !== userId);
+      saveLocalState();
+      queueCloudSync();
+      addLog(`Cuenta docente eliminada: ${target.username}`);
+      renderTeachersTable();
+    }
+
+    function renderGradesTable() {
+      const { grade, section, period } = getActiveContext();
+      const subjects = state.curriculum[grade] || [];
+      const students = getFilteredStudents(grade, section);
+
+      const thead = document.getElementById("gradesThead");
+      const tbody = document.getElementById("gradesTbody");
+      const emptyAlert = document.getElementById("gradesEmptyAlert");
+
+      emptyAlert.classList.toggle("hidden", students.length > 0);
+
+      let headHtml = `<tr><th>#</th><th>Estudiante</th>`;
+      subjects.forEach(sub => {
+        const badge = sub.type === "CUAN"
+          ? `<span class="pill pill-cuan">CUAN</span>`
+          : `<span class="pill pill-qual">CUAL</span>`;
+        headHtml += `<th>${sub.name}<br>${badge}</th>`;
+      });
+      headHtml += `<th>Prom. CUAN</th></tr>`;
+      thead.innerHTML = headHtml;
+
+      tbody.innerHTML = "";
+      students.forEach((stu, idx) => {
+        let rowHtml = `<tr><td>${idx + 1}</td><td><strong>${stu.name}</strong><br><span style="font-size:11px;color:var(--muted);">${stu.code} · ${stu.sex}</span></td>`;
+        const cuanScores = [];
+
+        subjects.forEach(sub => {
+          const key = getGradeKey(grade, section, period, stu.id, sub.id);
+          const val = state.grades[key] ?? "";
+          const allowed = canEditSubject(sub.name);
+
+          if (sub.type === "CUAN") {
+            if (val !== "" && !isNaN(Number(val))) cuanScores.push(Number(val));
+            const qual = scoreToQual(val);
+            rowHtml += `
+              <td>
+                <input type="number" min="0" max="100" class="grade-input" value="${val}" ${allowed ? "" : "disabled"}
+                  onchange="onGradeInputChange('${key}', this.value, 'CUAN')" />
+                <div style="font-size:11px;font-weight:700;color:var(--muted);margin-top:2px;">${qual || "-"}</div>
+              </td>
+            `;
+          } else {
+            rowHtml += `
+              <td>
+                <select class="qual-select" ${allowed ? "" : "disabled"} onchange="onGradeInputChange('${key}', this.value, 'CUAL')">
+                  <option value="">—</option>
+                  <option value="AA" ${val === "AA" ? "selected" : ""}>AA</option>
+                  <option value="AS" ${val === "AS" ? "selected" : ""}>AS</option>
+                  <option value="AF" ${val === "AF" ? "selected" : ""}>AF</option>
+                  <option value="AI" ${val === "AI" ? "selected" : ""}>AI</option>
+                </select>
+              </td>
+            `;
+          }
+        });
+
+        const avg = cuanScores.length
+          ? (cuanScores.reduce((a, b) => a + b, 0) / cuanScores.length).toFixed(1)
+          : "-";
+
+        rowHtml += `<td><strong>${avg}</strong></td></tr>`;
+        tbody.innerHTML += rowHtml;
+      });
+    }
+
+    function renderStudentsTable() {
+      const { grade, section } = getActiveContext();
+      const students = getFilteredStudents(grade, section);
+      const tbody = document.getElementById("studentsTbody");
+
+      if (!students.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);">Sin estudiantes en ${grade} "${section}".</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = students.map((s, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${s.code}</td>
+          <td><strong>${s.name}</strong></td>
+          <td>${s.sex}</td>
+          <td>${s.grade} "${s.section}"</td>
+          <td><button class="btn btn-danger btn-sm" onclick="deleteStudent('${s.id}')">Eliminar</button></td>
+        </tr>
+      `).join("");
+    }
+
+    function renderGuideView() {
+      const { grade, section, period } = getActiveContext();
+      const subjects = state.curriculum[grade] || [];
+      const students = getFilteredStudents(grade, section);
+
+      let approvedCount = 0;
+      let totalEvaluatedCuan = 0;
+      let sumAllCuan = 0;
+
+      students.forEach(stu => {
+        const cuanSubs = subjects.filter(s => s.type === "CUAN");
+        const scores = cuanSubs
+          .map(sub => state.grades[getGradeKey(grade, section, period, stu.id, sub.id)])
+          .filter(v => v !== undefined && v !== "" && !isNaN(Number(v)))
+          .map(Number);
+
+        if (scores.length) {
+          const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+          totalEvaluatedCuan++;
+          sumAllCuan += avg;
+          if (avg >= 60) approvedCount++;
+        }
+      });
+
+      const generalAvg = totalEvaluatedCuan ? (sumAllCuan / totalEvaluatedCuan).toFixed(1) : "0.0";
+      const approvalPct = totalEvaluatedCuan ? ((approvedCount / totalEvaluatedCuan) * 100).toFixed(1) + "%" : "0.0%";
+
+      document.getElementById("guideKpis").innerHTML = `
+        <div class="kpi"><div class="kpi-label">Matrícula Aula</div><div class="kpi-val">${students.length}</div></div>
+        <div class="kpi"><div class="kpi-label">Aprobados</div><div class="kpi-val">${approvedCount}</div></div>
+        <div class="kpi"><div class="kpi-label">% Aprobación</div><div class="kpi-val">${approvalPct}</div></div>
+        <div class="kpi"><div class="kpi-label">Promedio General</div><div class="kpi-val">${generalAvg}</div></div>
+      `;
+
+      const tbody = document.getElementById("guideSubjectTbody");
+      tbody.innerHTML = subjects.map(sub => {
+        let evalCount = 0;
+        let okCount = 0;
+        let failCount = 0;
+        let sum = 0;
+
+        students.forEach(stu => {
+          const val = state.grades[getGradeKey(grade, section, period, stu.id, sub.id)];
+          if (sub.type === "CUAN") {
+            if (val !== undefined && val !== "" && !isNaN(Number(val))) {
+              const n = Number(val);
+              evalCount++;
+              sum += n;
+              if (n >= 60) okCount++;
+              else failCount++;
+            }
+          } else {
+            if (val) {
+              evalCount++;
+              if (val !== "AI") okCount++;
+              else failCount++;
+            }
+          }
+        });
+
+        const pct = evalCount ? ((okCount / evalCount) * 100).toFixed(1) + "%" : "0.0%";
+        const metric = sub.type === "CUAN"
+          ? (evalCount ? (sum / evalCount).toFixed(1) : "-")
+          : "Cualitativa";
+
+        return `
+          <tr>
+            <td><strong>${sub.name}</strong></td>
+            <td><span class="pill ${sub.type === "CUAN" ? "pill-cuan" : "pill-qual"}">${sub.type}</span></td>
+            <td>${evalCount}</td>
+            <td><span class="pill pill-ok">${okCount}</span></td>
+            <td><span class="pill pill-fail">${failCount}</span></td>
+            <td>${pct}</td>
+            <td><strong>${metric}</strong></td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderConsolidatedView() {
+      const { grade, section, period } = getActiveContext();
+      const subjects = state.curriculum[grade] || [];
+      const students = getFilteredStudents(grade, section);
+
+      const thead = document.getElementById("consolidatedThead");
+      const tbody = document.getElementById("consolidatedTbody");
+
+      thead.innerHTML = `<tr><th>#</th><th>Código</th><th>Estudiante</th><th>Sexo</th>${subjects.map(s => `<th>${s.name}</th>`).join("")}<th>Promedio</th></tr>`;
+
+      if (!students.length) {
+        tbody.innerHTML = `<tr><td colspan="${subjects.length + 5}" style="text-align:center;color:var(--muted);">No hay registros para consolidar en este filtro.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = students.map((stu, i) => {
+        const cuanVals = [];
+        const cells = subjects.map(sub => {
+          const val = state.grades[getGradeKey(grade, section, period, stu.id, sub.id)];
+          if (sub.type === "CUAN" && val !== undefined && val !== "" && !isNaN(Number(val))) {
+            cuanVals.push(Number(val));
+          }
+          return `<td>${val ?? ""}</td>`;
+        }).join("");
+
+        const avg = cuanVals.length ? (cuanVals.reduce((a, b) => a + b, 0) / cuanVals.length).toFixed(1) : "-";
+        return `<tr><td>${i + 1}</td><td>${stu.code}</td><td>${stu.name}</td><td>${stu.sex}</td>${cells}<td><strong>${avg}</strong></td></tr>`;
+      }).join("");
+    }
+
+    function renderTeachersTable() {
+      const tbody = document.getElementById("teachersTbody");
+      tbody.innerHTML = state.users.map(u => `
+        <tr>
+          <td><strong>${u.name}</strong></td>
+          <td><code>${u.username}</code></td>
+          <td>${u.guideGrade || (u.role === "DIRECTOR" ? "Dirección" : "—")}</td>
+          <td>${(u.subjects || []).join(", ")}</td>
+          <td>${u.role === "DIRECTOR" ? "Principal" : `<button class="btn btn-danger btn-sm" onclick="deleteTeacher('${u.id}')">Eliminar</button>`}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderLogs() {
+      const el = document.getElementById("activityLog");
+      if (!el) return;
+      if (!state.logs.length) {
+        el.innerHTML = `<div class="log-item" style="color:var(--muted);">Sin movimientos registrados aún.</div>`;
+        return;
+      }
+      el.innerHTML = state.logs.map(line => `<div class="log-item">${line}</div>`).join("");
+    }
+
+    function renderAll() {
+      renderGradesTable();
+      renderStudentsTable();
+      renderGuideView();
+      renderConsolidatedView();
+      renderTeachersTable();
+      renderLogs();
+      updateLastSaveBadge();
+      updateConnectivityUI();
+    }
+
+    function triggerExcelDownload(filename, htmlTableBody) {
+      const logoImg = state.logoBase64
+        ? `<img src="${state.logoBase64}" style="height:56px;width:auto;" />`
+        : `<strong>INGGL</strong>`;
+
+      const docHtml = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office"
+              xmlns:x="urn:schemas-microsoft-com:office:excel"
+              xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta charset="UTF-8" /></head>
+        <body>
+          <table>
+            <tr>
+              <td>${logoImg}</td>
+              <td colspan="8">
+                <h2 style="margin:0;color:#14532d;">${state.schoolName}</h2>
+                <div>${state.municipality}</div>
+              </td>
+            </tr>
+          </table>
+          <br/>
+          ${htmlTableBody}
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob([docHtml], { type: "application/vnd.ms-excel;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      addLog(`Exportado archivo Excel: ${filename}`);
+    }
+
+    function exportConsolidatedExcel() {
+      const { grade, section, period } = getActiveContext();
+      const theadHtml = document.getElementById("consolidatedThead").outerHTML;
+      const tbodyHtml = document.getElementById("consolidatedTbody").outerHTML;
+      triggerExcelDownload(
+        `Consolidado_${grade}_${section}_${period.replace(/\s+/g, "_")}.xls`,
+        `<table border="1">${theadHtml}${tbodyHtml}</table>`
+      );
+    }
+
+    function exportPerformanceExcel() {
+      const { grade, section, period } = getActiveContext();
+      const tbodyHtml = document.getElementById("guideSubjectTbody").outerHTML;
+      triggerExcelDownload(
+        `Rendimiento_${grade}_${section}_${period.replace(/\s+/g, "_")}.xls`,
+        `<table border="1">
+          <thead>
+            <tr>
+              <th>Asignatura</th><th>Tipo</th><th>Evaluados</th><th>Aprobados</th><th>Reprobados</th><th>% Aprobación</th><th>Promedio / Nivel</th>
+            </tr>
+          </thead>
+          ${tbodyHtml}
+        </table>`
+      );
+    }
+
+    function downloadJsonBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Respaldo_INGGL_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      addLog("Respaldo JSON descargado.");
+    }
+
+    function importJsonBackup(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          state = Object.assign(createBlankState(), parsed);
+          saveLocalState();
+          renderLogos();
+          renderAll();
+          addLog("Respaldo JSON restaurado.");
+          if (state.syncEndpoint) pushToCloud(true);
+        } catch (err) {
+          alert("El archivo JSON no es válido.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Inicialización
+    renderLogos();
+    updateConnectivityUI();
+    updateLastSaveBadge();
+  </script>
+</body>
+</html>
