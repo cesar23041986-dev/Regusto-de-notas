@@ -1349,7 +1349,25 @@
       }
 
       errBox.classList.add("hidden");
+      addLog(`Inicio de sesión: ${found.name}`);
+      applyLoggedInUser(found, true);
+    }
+
+    const SESSION_KEY = "INGGL_ACTIVE_SESSION_V1";
+
+    function saveActiveSession(userId) {
+      try {
+        if (userId) {
+          localStorage.setItem(SESSION_KEY, userId);
+        } else {
+          localStorage.removeItem(SESSION_KEY);
+        }
+      } catch (e) {}
+    }
+
+    function applyLoggedInUser(found, shouldPullCloud = false) {
       currentUser = found;
+      saveActiveSession(found.id);
       document.getElementById("loginSection").classList.add("hidden");
       document.getElementById("appSection").classList.remove("hidden");
       document.getElementById("btnLogout").classList.remove("hidden");
@@ -1377,17 +1395,27 @@
       }
 
       document.getElementById("syncEndpointInput").value = state.syncEndpoint || "";
-      addLog(`Inicio de sesión: ${currentUser.name}`);
+      renderAll();
 
-      if (state.syncEndpoint && navigator.onLine) {
+      if (shouldPullCloud && state.syncEndpoint && navigator.onLine) {
         pullFromCloud(true);
-      } else {
-        renderAll();
       }
+    }
+
+    function restoreSessionIfAny() {
+      try {
+        const savedId = localStorage.getItem(SESSION_KEY);
+        if (!savedId) return;
+        const found = state.users.find(u => u.id === savedId);
+        if (found) {
+          applyLoggedInUser(found, true);
+        }
+      } catch (e) {}
     }
 
     function logout() {
       currentUser = null;
+      saveActiveSession(null);
       document.getElementById("appSection").classList.add("hidden");
       document.getElementById("loginSection").classList.remove("hidden");
       document.getElementById("btnLogout").classList.add("hidden");
@@ -2251,6 +2279,7 @@
     renderLogos();
     updateConnectivityUI();
     updateLastSaveBadge();
+    restoreSessionIfAny();
   </script>
 </body>
 </html>
